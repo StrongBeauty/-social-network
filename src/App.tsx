@@ -34,7 +34,7 @@ export const App = (props: AppPropsType)  => {
                    render={ () => <Profile profilePage={props.state.profilePage}
                                            dispatch={props.dispatch}
                                            /*addPost={props.addPost}
-                                           updateNewPostText={props.updateNewPostText}*/
+                                            updateNewPostText={props.updateNewPostText}*/
                    />} />
             <Route path='/news'
                    render={ () => <News />} />
