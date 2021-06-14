@@ -1,5 +1,5 @@
-import {profileReducer} from "./ProfileReducer";
-import {dialogsReducer} from "./DialogsReducer";
+import {addPostActionCreator, profileReducer, updateNewPostTextActionCreator} from "./ProfileReducer";
+import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from "./DialogsReducer";
 import {sidebarReducer} from "./SidebarReducer";
 
 export type PostType = {
@@ -49,7 +49,13 @@ export type StoreType = {
     //{    type: 'UPDATE-NEW-POST-TEXT'
     //newText: string }
 
-export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
+export type ActionsTypes =
+    | ReturnType<typeof addPostActionCreator>
+    | ReturnType<typeof updateNewPostTextActionCreator>
+    | ReturnType<typeof sendMessageCreator>
+    | ReturnType<typeof updateNewMessageBodyCreator>
+
+// export type ActionsTypes = any
 
 /*const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
@@ -108,38 +114,38 @@ export let store: StoreType = {
         this._state.profilePage.newPostText = newText
         this._callSubscriber()
     },
-    dispatch (action) {
+    dispatch (action: ActionsTypes) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         this._state.sidebar = sidebarReducer(this._state.sidebar, action)
 
         this._callSubscriber()
-        /*if (action.type === ADD_POST) {
-            let newPost: PostType = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0,
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ''
-            this._callSubscriber()
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newText
-            this._callSubscriber()
-        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-            this._state.dialogsPage.newMessageBody = action.body
-            this._callSubscriber()
-        } else if (action.type === SEND_MESSAGE) {
-            let body = this._state.dialogsPage.newMessageBody
-            this._state.dialogsPage.newMessageBody = ''
-            this._state.dialogsPage.messages.push({id: 6, message: body})
-            this._callSubscriber()
-        }
+        // if (action.type === ADD_POST) {
+        //     let newPost: PostType = {
+        //         id: 5,
+        //         message: this._state.profilePage.newPostText,
+        //         likesCount: 0,
+        //     }
+        //     this._state.profilePage.posts.push(newPost)
+        //     this._state.profilePage.newPostText = ''
+        //     this._callSubscriber()
+        // } else if (action.type === UPDATE_NEW_POST_TEXT) {
+        //     this._state.profilePage.newPostText = action.newText
+        //     this._callSubscriber()
+        // } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+        //     this._state.dialogsPage.newMessageBody = action.body
+        //     this._callSubscriber()
+        // } else if (action.type === SEND_MESSAGE) {
+        //     let body = this._state.dialogsPage.newMessageBody
+        //     this._state.dialogsPage.newMessageBody = ''
+        //     this._state.dialogsPage.messages.push({id: 6, message: body})
+        //     this._callSubscriber()
+        // }
     },
-    subscriber(observer) {
+    subscriber(observer: () => void) {
         this._callSubscriber = observer // наблюдатель (паттерн)
-    }*/
-}}
+    }
+}
 
 /*export const addPostActionCreator = () =>
     ({type: ADD_POST}) as const

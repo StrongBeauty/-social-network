@@ -1,9 +1,9 @@
-import {PostType} from "./state";
+import {PostType, ProfilePageType} from "./state";
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 
-export const profileReducer = (state, action) => {
+export const profileReducer = (state: ProfilePageType, action: any) => {
     switch (action.type) {
         case ADD_POST:
             let newPost: PostType = {
@@ -11,8 +11,8 @@ export const profileReducer = (state, action) => {
                 message: state.newPostText,
                 likesCount: 0,
             }
-            state.profilePage.posts.push(newPost)
-            state.profilePage.newPostText = ''
+            state.posts.push(newPost)
+            state.newPostText = ''
             return state
         case UPDATE_NEW_POST_TEXT:
             state.newPostText = action.newText
