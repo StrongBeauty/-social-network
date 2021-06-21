@@ -1,42 +1,39 @@
 import React, {FC} from "react";
 import s from "./MyPosts.module.css"
 import {Post} from "./Post/Post";
-import {
-    ActionsTypes,
-    PostType,
-    ProfilePageType,
-} from "../../../redux/state";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/ProfileReducer";
+import {MapDispatchToPropsType, MapStateToPropsType, OwnPropsDialogsContainerType} from "./MyPostsContainer";
 
-type MyPostsPropsType = {
+/*type MyPostsPropsType = {
     posts: Array<PostType>
     newPostText: string
-    //addPost: () => void
-    //updateNewPostText: (newText: string) => void
-    dispatch: (action: ActionsTypes) => void
-}
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+    //dispatch: (action: ActionsTypes) => void
+}*/
 
-export let MyPosts : React.FC<MyPostsPropsType> = (props ) => {
+type MyPostsPagePropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsDialogsContainerType
+
+export const MyPosts : React.FC<MyPostsPagePropsType> = (props ) => {
 
     let postsElements = props.posts.
         map(p => <Post message = {p.message} likesCount={p.likesCount} />)
 
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
-    const addPost = () => {
+    const onAddPost = () => {
         //if(newPostElement.current)
 
-        //props.addPost()
-            props.dispatch(addPostActionCreator())
+        props.addPost()
+        //props.dispatch(addPostActionCreator())
         //newPostElement.current && newPostElement.current.value
         //or
         //newPostElement.current?.value
 
     }
     let onPostChange = () => {
-    let newText = newPostElement.current?.value as string
-        props.dispatch(updateNewPostTextActionCreator(newText))
-        //props.updateNewPostText(text)
+    let text = newPostElement.current?.value as string
+        //props.dispatch(updateNewPostTextActionCreator(newText))
+        props.updateNewPostText(text)
     }
 
     return (
@@ -49,7 +46,10 @@ export let MyPosts : React.FC<MyPostsPropsType> = (props ) => {
                               value={props.newPostText} />
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>
+                        {/*<button onClick={addPost}>*/}
+                        Add post
+                    </button>
                 </div>
             </div>
             <div className={s.posts}>

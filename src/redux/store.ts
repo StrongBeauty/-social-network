@@ -1,5 +1,5 @@
 import {addPostActionCreator, profileReducer, updateNewPostTextActionCreator} from "./ProfileReducer";
-import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from "./DialogsReducer";
+import {dialogsReducer, sendMessageActionCreator, updateNewMessageBodyActionCreator} from "./DialogsReducer";
 import {sidebarReducer} from "./SidebarReducer";
 
 export type PostType = {
@@ -35,8 +35,8 @@ export type StoreType = {
     _state: RootStateType
     _callSubscriber: () => void
     getState: () => RootStateType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    //addPost: () => void
+    //updateNewPostText: (newText: string) => void
     dispatch: (action: ActionsTypes) => void
     subscriber: (observer: ()=> void) => void
 }
@@ -50,10 +50,10 @@ export type StoreType = {
     //newText: string }
 
 export type ActionsTypes =
-    | ReturnType<typeof addPostActionCreator>
-    | ReturnType<typeof updateNewPostTextActionCreator>
-    | ReturnType<typeof sendMessageCreator>
-    | ReturnType<typeof updateNewMessageBodyCreator>
+    & ReturnType<typeof addPostActionCreator>
+    & ReturnType<typeof updateNewPostTextActionCreator>
+    & ReturnType<typeof sendMessageActionCreator>
+    & ReturnType<typeof updateNewMessageBodyActionCreator>
 
 // export type ActionsTypes = any
 
@@ -100,7 +100,7 @@ export let store: StoreType = {
     getState() {
         return this._state
     },
-    addPost() {
+    /*addPost() {
         let newPost: PostType = {
             id: 5,
             message: this._state.profilePage.newPostText,
@@ -113,12 +113,11 @@ export let store: StoreType = {
     updateNewPostText(newText: string) {
         this._state.profilePage.newPostText = newText
         this._callSubscriber()
-    },
+    },*/
     dispatch (action: ActionsTypes) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
         this._state.sidebar = sidebarReducer(this._state.sidebar, action)
-
         this._callSubscriber()
         // if (action.type === ADD_POST) {
         //     let newPost: PostType = {

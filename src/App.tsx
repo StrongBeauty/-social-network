@@ -9,18 +9,21 @@ import {BrowserRouter} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {ActionsTypes, RootStateType,} from './redux/state'
-
+import {ActionsTypes, RootStateType, StoreType,} from './redux/store'
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import {store} from "./redux/redux-store";
 
 
 type AppPropsType ={
-  state: RootStateType
+
+  //state: RootStateType
+  // store: any
   //addPost: () => void
   //updateNewPostText: (newText: string) => void
-  dispatch: (action: ActionsTypes) => void
+  //dispatch: (action: ActionsTypes) => void
 }
 
-export const App = (props: AppPropsType)  => {
+export const App = ()  => {
 
   return (
       <BrowserRouter>
@@ -29,13 +32,17 @@ export const App = (props: AppPropsType)  => {
           <Navbar/>
           <div className = 'app-wrapper-content'>
             <Route path='/dialogs'
-                   render={ () => <Dialogs
-                       dialogsPage={props.state.dialogsPage}
-                       dispatch={props.dispatch}
+                   render={ () => <DialogsContainer
+                       //state={props.state}
+                       //dispatch={props.dispatch}
+                       //Dialogs
+                       //dialogsPage={props.state.dialogsPage}
+                       //dispatch={props.dispatch}
                    />} />
             <Route path='/profile'
-                   render={ () => <Profile profilePage={props.state.profilePage}
-                                           dispatch={props.dispatch}
+                   render={ () => <Profile //state={props.state}
+                       //profilePage={props.state.profilePage}
+                         //                  dispatch={props.dispatch}
                                            /*addPost={props.addPost}
                                             updateNewPostText={props.updateNewPostText}*/
                    />} />

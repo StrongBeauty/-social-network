@@ -2,20 +2,18 @@ import React, {FC} from 'react'
 import s from "./Dialogs.module.css"
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-import {ActionsTypes, DialogsPageType} from "../../redux/state";
-import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/DialogsReducer";
+import {MapDispatchToPropsType, MapStateToPropsType, OwnPropsDialogsContainerType} from "./DialogsContainer";
 
-type  DialogsPagePropsType = {
-    dialogsPage: DialogsPageType
-    dispatch: (action: ActionsTypes) => void
-}
+type  DialogsPagePropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsDialogsContainerType
 
 export const Dialogs : React.FC<DialogsPagePropsType> = (props) => {
+    let state = props.dialogsPage
+
     let dialogsElements = props.dialogsPage.dialogs
-        .map( d => <DialogItem name={d.name} id={d.id}/>)
+        .map( d => <DialogItem name={d.name} key = {d.id} id={d.id}/>)
 
     let messagesElements = props.dialogsPage.messages
-        .map( m => <Message message={m.message} /> )
+        .map( m => <Message message={m.message} key = {m.id} /> )
 
 
 
@@ -25,12 +23,14 @@ export const Dialogs : React.FC<DialogsPagePropsType> = (props) => {
 
 
     let onSendMessageClick = () => {
-        props.dispatch(sendMessageCreator())
+        props.sendMessage()
+        //props.dispatch(sendMessageCreator())
     }
 
     const onNewMessageChange = (e: any) => {
         let body = e.currentTarget.value
-        props.dispatch(updateNewMessageBodyCreator(body))
+        props.updateNewMessageBody(body)
+        //props.dispatch(updateNewMessageBodyCreator(body))
     }
       return (
         <div className={s.dialogs}>
