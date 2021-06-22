@@ -7,7 +7,7 @@ import {MapDispatchToPropsType, MapStateToPropsType, OwnPropsDialogsContainerTyp
 type  DialogsPagePropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsDialogsContainerType
 
 export const Dialogs : React.FC<DialogsPagePropsType> = (props) => {
-    let state = props.dialogsPage
+    //let state = props.dialogsPage
 
     let dialogsElements = props.dialogsPage.dialogs
         .map( d => <DialogItem name={d.name} key = {d.id} id={d.id}/>)

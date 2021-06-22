@@ -56,18 +56,6 @@ import {Dispatch} from "redux";
 }
 */
 
-export type MapStateToPropsType = {
-    posts: Array<PostType>
-    newPostText: string
-}
-
-export type MapDispatchToPropsType = {
-    addPost: () => void
-    updateNewPostText: (text: string) => void
-}
-
-export type OwnPropsDialogsContainerType = {}
-
 let mapStateToProps =  (state: AppStateType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts,
@@ -80,10 +68,22 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         addPost: () => {
             dispatch(addPostActionCreator())
         },
-        updateNewPostText: (text: string) => {
+        updateNewPostText: (text) => {
             dispatch(updateNewPostTextActionCreator(text))
         }
     }
 }
 
 export const MyPostsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsDialogsContainerType, AppStateType>(mapStateToProps, mapDispatchToProps)(MyPosts)
+
+export type MapStateToPropsType = {
+    posts: Array<PostType>
+    newPostText: string
+}
+
+export type MapDispatchToPropsType = {
+    addPost: () => void
+    updateNewPostText: (text: string) => void
+}
+
+export type OwnPropsDialogsContainerType = {}
