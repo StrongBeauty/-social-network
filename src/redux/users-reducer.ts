@@ -1,9 +1,12 @@
+import {usersAPI} from "../api/api";
+
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 
 const initialState = {
@@ -16,8 +19,11 @@ const initialState = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: [] as Array<number>,
 }
+
+export type UsersPageType = typeof initialState
 
 export const usersReducer = (state:UsersPageType = initialState, action: ActionsTypes): UsersPageType  => {
     switch (action.type) {
@@ -62,11 +68,19 @@ export const usersReducer = (state:UsersPageType = initialState, action: Actions
                 ...state,
                 isFetching: action.isFetching
             }
+        case TOGGLE_IS_FOLLOWING_PROGRESS:
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(id => id != action.userId)
+            }
         default:
             return state
 
     }
 }
+
 export const follow = (userId: number) =>
     ({type: FOLLOW, userId}) as FollowACType
 
@@ -84,6 +98,24 @@ export const setTotalUsersCount = (totalUsersCount: number) =>
 
 export const toggleIsFetching = (isFetching: boolean) =>
     ({type: TOGGLE_IS_FETCHING, isFetching}) as toggleIsFetchingACT
+
+export const toggleIsFollowingProgress = (isFetching: boolean, userId: number) =>
+    ({type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId}) as toggleIsFollowingProgressACT
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+
+    return (dispatch: any) => {
+
+        dispatch(toggleIsFetching(true))
+
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(toggleIsFetching(false))
+            dispatch(setUsers(data.items))
+            dispatch(setTotalUsersCount(data.totalCount))
+        })
+    }
+}
+
 
 type FollowACType = {
     type: typeof FOLLOW
@@ -110,17 +142,31 @@ type toggleIsFetchingACT = {
     isFetching: boolean
 }
 
-type ActionsTypes = FollowACType  | UnfollowACType | SetUsersACType | SetCurrentPageACT | setTotalUsersCountACT | toggleIsFetchingACT
+type toggleIsFollowingProgressACT = {
+    type: typeof TOGGLE_IS_FOLLOWING_PROGRESS
+    isFetching: boolean
+    userId: number
+}
+
+
+type ActionsTypes = FollowACType  | UnfollowACType | SetUsersACType | SetCurrentPageACT | setTotalUsersCountACT | toggleIsFetchingACT | toggleIsFollowingProgressACT
 export type UserType = {
     id: number
-    photos: string
-    followed: boolean
     name: string
     status: string
+    photos: PhotosType
+    followed: boolean
+    totalCount: number
+    error: string
     location: LocationType
 }
+
+export type PhotosType = {
+    small: string,
+    large: string
+}
+
 export type LocationType = {
     city: string
     country: string
 }
-export type UsersPageType = typeof initialState

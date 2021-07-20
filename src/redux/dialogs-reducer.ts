@@ -22,8 +22,9 @@ const initialState = {
     ] as Array<MessageType>,
     newMessageBody: '' as string
 }
+export type DialogsPageType = typeof initialState
 
-export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes) => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes): DialogsPageType => {
    // let stateCopy
 
     switch (action.type) {
@@ -47,11 +48,11 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
             return state
     }
 }
-export const sendMessageActionCreator = () =>
-    ({type: SEND_MESSAGE}) as const
+export const sendMessageActionCreator = (): SendMessageActionType =>
+    ({type: SEND_MESSAGE})
 
-export const updateNewMessageBodyActionCreator = (body: string) =>
-    ({type: UPDATE_NEW_MESSAGE_BODY, body}) as const
+export const updateNewMessageBodyActionCreator = (body: string): UpdateNewMessageBodyActionType =>
+    ({type: UPDATE_NEW_MESSAGE_BODY, body})
 
 
 type SendMessageActionType = {
@@ -62,6 +63,8 @@ type UpdateNewMessageBodyActionType = {
     body: string
 }
 type ActionsTypes = SendMessageActionType | UpdateNewMessageBodyActionType
+
+
 export type DialogType = {
     id: number
     name: string
@@ -70,4 +73,3 @@ export type MessageType = {
     id: number
     message: string
 }
-export type DialogsPageType = typeof initialState

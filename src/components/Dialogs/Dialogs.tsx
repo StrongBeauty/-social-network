@@ -3,6 +3,7 @@ import s from "./Dialogs.module.css"
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
 import {MapDispatchToPropsType, MapStateToPropsType, OwnPropsDialogsContainerType} from "./DialogsContainer";
+import {Redirect} from "react-router-dom"
 
 type  DialogsPagePropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsDialogsContainerType
 
@@ -32,6 +33,9 @@ export const Dialogs : React.FC<DialogsPagePropsType> = (props) => {
         props.updateNewMessageBody(body)
         //props.dispatch(updateNewMessageBodyCreator(body))
     }
+
+    if (!props.isAuth) return <Redirect to={'/login'} />
+
       return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>

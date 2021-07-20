@@ -1,5 +1,5 @@
 import React from 'react'
-import {DialogsPageType, sendMessageActionCreator, updateNewMessageBodyActionCreator} from "../../redux/DialogsReducer";
+import {DialogsPageType, sendMessageActionCreator, updateNewMessageBodyActionCreator} from "../../redux/dialogs-reducer";
 import {Dialogs} from './Dialogs'
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
@@ -45,6 +45,7 @@ import {Dispatch} from "redux";
 
 export type MapStateToPropsType = {
     dialogsPage: DialogsPageType
+    isAuth: boolean
 }
 
 export type MapDispatchToPropsType = {
@@ -56,7 +57,8 @@ export type OwnPropsDialogsContainerType = {}
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth,
     }
 }
 

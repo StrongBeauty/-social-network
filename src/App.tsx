@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import {Header} from "./components/Header/Header"
 import {Navbar} from "./components/Navbar/Navbar";
-import {Profile} from "./components/Profile/Profile";
 import {Route} from "react-router-dom";
 import {BrowserRouter} from "react-router-dom";
 import {News} from "./components/News/News";
@@ -10,6 +9,10 @@ import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
+import {Login} from "./components/Login/Login";
+
 
 
 /*type AppPropsType = {
@@ -26,7 +29,7 @@ export const App = () => {
     return (
         <BrowserRouter>
             <div className='app-wrapper'>
-                <Header/>
+                <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs'
@@ -37,8 +40,8 @@ export const App = () => {
                                //dialogsPage={props.state.dialogsPage}
                                //dispatch={props.dispatch}
                            />}/>
-                    <Route path='/profile'
-                           render={() => <Profile //state={props.state}
+                    <Route path='/profile/:userId?'
+                           render={() => <ProfileContainer  //state={props.state}
                                //profilePage={props.state.profilePage}
                                //                  dispatch={props.dispatch}
                                /*addPost={props.addPost}
@@ -52,6 +55,8 @@ export const App = () => {
                            render={() => <Music />}/>
                     <Route path='/settings'
                            render={() => <Settings />}/>
+                    <Route path='/login'
+                           render={() => <Login />}/>
 
                     {/*<Route path='/dialogs' component={Dialogs} />
                 <Route path='/profile' component={Profile} />

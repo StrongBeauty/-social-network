@@ -3,19 +3,18 @@ import s from "./Profile.module.css"
 import {MyPosts} from './MyPosts/MyPosts'
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {ProfilePageType, ProfileType} from "../../redux/profile-reducer";
 
-/*type ProfilePagePropsType = {
-    profilePage: ProfilePageType
-    //addPost: () => void
-    //updateNewPostText: (newText: string) => void
-    dispatch: (action: ActionsTypes) => void
-}*/
+type ProfilePagePropsType = {
+    profile: ProfileType
+    setUserProfile: any
+}
 
-export const Profile = () => {
+export const Profile = (props: ProfilePagePropsType) => {
 
     return(
         <div>
-            <ProfileInfo />
+            <ProfileInfo profile={props.profile}/>
             <MyPostsContainer //state={props.state}
                              // posts={props.profilePage.posts}
                     // newPostText={props.profilePage.newPostText}
