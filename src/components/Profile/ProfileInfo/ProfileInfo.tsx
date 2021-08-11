@@ -1,10 +1,14 @@
 import React from "react";
 import s from "./ProfileInfo.module.css"
 import {Preloader} from "../../common/preloader/preloader";
-import {ProfilePageType, ProfileType} from "../../../redux/profile-reducer";
+import {ProfileType} from "../../../redux/profile-reducer";
+import {ProfileStatus} from "./ProfileStatus";
+
 
 type PropsType = {
     profile: ProfileType
+    status: string
+    updateStatus: (status: string) => void
 }
 
 export const ProfileInfo = (props: PropsType) => {
@@ -19,6 +23,8 @@ export const ProfileInfo = (props: PropsType) => {
             </div>
             <div className={s.descriptionBlock }>
                 <img src={props.profile.photos?.large}/>
+                <ProfileStatus status='Hello my friends'
+                               updateStatus={props.updateStatus}/>
             </div>
         </div>
     )

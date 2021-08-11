@@ -1,9 +1,13 @@
 import React from 'react'
-import {DialogsPageType, sendMessageActionCreator, updateNewMessageBodyActionCreator} from "../../redux/dialogs-reducer";
+import {actions, DialogsPageType} from "../../redux/dialogs-reducer";
 import {Dialogs} from './Dialogs'
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redux-store";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirec";
+
+
+
 
 
 /*export const DialogsContainer: React.FC<DialogsPagePropsType> = (props) => {
@@ -49,8 +53,8 @@ export type MapStateToPropsType = {
 }
 
 export type MapDispatchToPropsType = {
-    updateNewMessageBody: (body: string) => void
-    sendMessage: () => void
+    //updateNewMessageBody: (body: string) => void
+    sendMessage: (newMessage: string) => void
 }
 
 export type OwnPropsDialogsContainerType = {}
@@ -64,13 +68,25 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
-        updateNewMessageBody: (body: string) => {
+/*        updateNewMessageBody: (body: string) => {
             dispatch(updateNewMessageBodyActionCreator(body))
-        },
-        sendMessage: () => {
-            dispatch(sendMessageActionCreator())
+        },*/
+        sendMessage: (newMessage) => {
+            dispatch(actions.sendMessageActionCreator(newMessage))
         }
     }
 }
 
-export const DialogsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsDialogsContainerType, AppStateType>(mapStateToProps, mapDispatchToProps)(Dialogs)
+// let AuthRedirectComponent = withAuthRedirect(Dialogs)
+
+export const DialogsContainer = compose<React.ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, mapDispatchToProps),
+)(Dialogs)
+
+/*export const DialogsContainer = compose<React.ComponentType>(
+    connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsDialogsContainerType, AppStateType>(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+)(Dialogs)*/
+
+//const DialogsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsDialogsContainerType, AppStateType>(mapStateToProps, mapDispatchToProps)(Dialogs)

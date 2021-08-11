@@ -1,5 +1,5 @@
-import {addPost, updateNewPostText} from "./profile-reducer";
-import {sendMessageActionCreator, updateNewMessageBodyActionCreator} from "./dialogs-reducer";
+// import {addPost} from "./profile-reducer";
+// import {sendMessageActionCreator} from "./dialogs-reducer";
 
 export type PostType = {
     id: number
@@ -14,31 +14,31 @@ export type MessageType = {
     id: number
     message: string
 }
-export type ProfilePageType = {
-    posts: Array<PostType>
-    newPostText: string
-}
-export type DialogsPageType = {
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-    newMessageBody: string
-}
-export type SideBarType = {}
-export type RootStateType = {
-    profilePage: ProfilePageType
-    dialogsPage: DialogsPageType
-    sidebar: SideBarType
-}
+// export type ProfilePageType = {
+//     posts: Array<PostType>
+//     newPostText: string
+// }
+// export type DialogsPageType = {
+//     dialogs: Array<DialogType>
+//     messages: Array<MessageType>
+//     newMessageBody: string
+// }
+// export type SideBarType = {}
+// export type RootStateType = {
+//     profilePage: ProfilePageType
+//     dialogsPage: DialogsPageType
+//     sidebar: SideBarType
+// }
 
-export type StoreType = {
-    _state: RootStateType
-    _callSubscriber: () => void
-    getState: () => RootStateType
-    //addPost: () => void
-    //updateNewPostText: (newText: string) => void
-    dispatch: (action: ActionsTypes) => void
-    subscriber: (observer: ()=> void) => void
-}
+// export type StoreType = {
+//     _state: RootStateType
+//     _callSubscriber: () => void
+//     getState: () => RootStateType
+//     //addPost: () => void
+//     //updateNewPostText: (newText: string) => void
+//     dispatch: (action: ActionsTypes) => void
+//     subscriber: (observer: ()=> void) => void
+// }
 
 //export type AddPostActionType = ReturnType<typeof addPostActionCreator>
     //{ type: 'ADD-POST'
@@ -48,11 +48,11 @@ export type StoreType = {
     //{    type: 'UPDATE-NEW-POST-TEXT'
     //newText: string }
 
-export type ActionsTypes =
-    & ReturnType<typeof addPost>
-    & ReturnType<typeof updateNewPostText>
-    & ReturnType<typeof sendMessageActionCreator>
-    & ReturnType<typeof updateNewMessageBodyActionCreator>
+// export type ActionsTypes =
+//     & ReturnType<typeof addPost>
+//     //& ReturnType<typeof updateNewPostText>
+//     & ReturnType<typeof sendMessageActionCreator>
+    //& ReturnType<typeof updateNewMessageBodyActionCreator>
 
 // export type ActionsTypes = any
 

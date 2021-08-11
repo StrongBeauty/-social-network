@@ -1,22 +1,21 @@
-const SET_USERS_DATA = 'SET_USERS_DATA'
-
+import {BaseThunkType, InferActionsTypes} from "./redux-store";
+import {authAPI} from "../api/auth-api";
 
 
 const initialState = {
-    data: {} as DataType,
-    isAuth: false as boolean
+    data: {}  as DataType ,
+    isAuth: false
 }
 
-export type AuthPageType = typeof initialState
 
-
-export const authReducer = (state: AuthPageType = initialState, action: ActionsTypes): AuthPageType  => {
+export const authReducer = (state: AuthPageType = initialState, action: ActionsType): AuthPageType  => {
     switch (action.type) {
-        case SET_USERS_DATA:
+        case 'SN/AUTH/SET_USERS_DATA':
+            debugger
             return {
                 ...state,
                 ...action.data,
-                isAuth: true,
+                isAuth: action.isAuth,
             }
         default:
             return state
@@ -25,25 +24,59 @@ export const authReducer = (state: AuthPageType = initialState, action: ActionsT
 }
 
 
-export const setUsersData = (data: DataType) =>
-    ({type: SET_USERS_DATA, data})
-
-
-type SetUsersDataAC = {
-    type: typeof SET_USERS_DATA,
-    data: DataType
+export const actions = {
+    setAuthUsersData: (data: DataType, isAuth: boolean) =>
+        ({type: 'SN/AUTH/SET_USERS_DATA', data, isAuth} as const),
 }
 
-type ActionsTypes = SetUsersDataAC
+
+export const getAuthUserData = (): ThunkType => (dispatch) => {
+    authAPI.me()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(actions.setAuthUsersData(response.data.data,  true))
+            }
+        })
+}
+
+export const login = (email: string, password: string, rememberMe: boolean): ThunkType => (dispatch) => {
+    authAPI.login(email, password, rememberMe)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(getAuthUserData())
+            }
+        })
+}
+
+export const logout = (): ThunkType => (dispatch) => {
+    authAPI.logout()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(actions.setAuthUsersData({id: -1, login: '', email: '' }, false))
+            }
+        })
+}
+
+/*type SetAuthUsersDataACT = {
+    type: 'SET_USERS_DATA'
+    data: DataType
+    isAuth: boolean
+}*/
+
+export type AuthPageType = typeof initialState
+
+type ActionsType = InferActionsTypes<typeof actions>
+
+type ThunkType = BaseThunkType<ActionsType, void>
 
 export type AuthType = {
     resultCode: 0
-    messages: [],
+    messages: []
     data: DataType
 }
 
 export type DataType = {
     id: number
-    email: string
     login: string
+    email: string
 }

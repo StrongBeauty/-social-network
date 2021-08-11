@@ -1,44 +1,31 @@
 import axios from "axios";
+import {UserType} from "../redux/users-reducer";
 
 
-const instance = axios.create({
+export const instance = axios.create({
     withCredentials: true,
-    baseURL: 'https://social-network.samuraijs.com/api/1.0',
+    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
         'API-KEY': '065141aa-5aec-4cbf-85a6-d8a09e624b9e'
     }
 })
 
-export const usersAPI = {
-    getUsers (currentPage: number, pageSize: number) {
-        return instance.get(`/users?page=${currentPage}&count=${pageSize}`)
-            .then(response => {
-                return response.data
-            })
-    },
-    getNoUsers () {
-        return instance.get(`/users`)
-            .then(response => {
-                return response.data
-            })
-    }
+export enum ResultCodeEnum {
+    Succes = 0,
+    Error,
 }
 
-export const authAPI = {
-    getAuthUser() {
-        return instance.get(`/auth/me`)
-            .then(response => {
-                return response.data
-            })
-    },
 
+export type GetItemsType = {
+    items: Array<UserType>
+    totalCount: number
+    error: string
 }
 
-export const profileAPI = {
-    getProfileUser(userId: number) {
-        return instance.get(`/profile/${userId}`)
-            .then(response => {
-                return response.data
-            })
-    },
+export type ResponseType<D = {}, RC = ResultCodeEnum> = {
+    data: D
+    messages: Array<string>
+    resultCode: RC
 }
+
+
