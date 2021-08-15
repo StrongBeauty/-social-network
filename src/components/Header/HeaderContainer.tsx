@@ -18,15 +18,18 @@ class HeaderContainer extends React.Component<MapStateToPropsType & MapDispatchT
     }*/
 
     render() {
-        debugger
+
         return <Header {...this.props}  />
     }
 }
 
-const mapStateToProps =(state: AppStateType): MapStateToPropsType => ({
-    login: state.auth.data.email,
-    isAuth: state.auth.isAuth,
-})
+const mapStateToProps =(state: AppStateType): MapStateToPropsType => {
+    console.log(' login: state.auth.data.emai',  state.auth.data.email)
+    return {
+        isAuth: state.auth.isAuth,
+        login: state.auth.data.email,
+    }
+}
 
 export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>
 (mapStateToProps, {/*setAuthUsersData: setUsersData*/  /*getAuthUserData,*/ logout})(HeaderContainer)

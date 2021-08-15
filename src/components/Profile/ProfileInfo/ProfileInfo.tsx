@@ -26,6 +26,7 @@ export const ProfileInfo = (props: PropsType) => {
                 <ProfileStatus status='Hello my friends'
                                updateStatus={props.updateStatus}/>
             </div>
+            <h1>ddada</h1>
         </div>
     )
 }

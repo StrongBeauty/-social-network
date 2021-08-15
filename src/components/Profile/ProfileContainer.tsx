@@ -13,7 +13,7 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirec";
 class ProfileContainer extends React.Component<MapStateToPropsType  & MapDispatchToPropsType & RouteComponentProps<{userId: string}>>{
 
     componentDidMount() {
-        let userId = this.props.match.params.userId
+        let userId = !this.props.match.params.userId ? '11851' : this.props.match.params.userId
 
         if (!userId) {
             userId = String(this.props.authorizedUserId)
@@ -21,6 +21,7 @@ class ProfileContainer extends React.Component<MapStateToPropsType  & MapDispatc
                 this.props.history.push('/login')
             }
         }
+
 
         this.props.getUserProfile(+userId)
         this.props.getUserStatus(+userId)
