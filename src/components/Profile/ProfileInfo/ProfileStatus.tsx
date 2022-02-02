@@ -1,6 +1,4 @@
 import React, {ChangeEvent} from "react";
-import {ProfileType} from "../../../redux/profile-reducer";
-
 
 type ProfileStatusPropsType = {
     status: string
@@ -8,17 +6,15 @@ type ProfileStatusPropsType = {
 }
 
 export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
-    /*if (!props.profile) {
-        return <Preloader/>
-    }*/
+
     state = {
         editMode: false,
-        status: this.props.status,
+        status: this.props.status ? this.props.status : '',
     }
 
     activateEditMode = () => {
         this.setState({
-            editMode: true
+            editMode: true,
         })
     }
 
@@ -26,58 +22,55 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         this.setState({
             editMode: false
         })
-        this.props.updateStatus(this.props.status)
+        this.state.status && this.props.updateStatus(this.state.status)
     }
-
+    handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            this.deactivateEditMode()
+        }
+    }
     onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
+         this.setState({
             status: e.currentTarget.value
-        })}
-    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<{}>, snapshot?: any): void {
-    if (prevProps.status !== this.props.status) {
-        this.setState({
-            status: this.props.status
         })
     }
-        /*let a = this.state
-        let b = this.props*/
+
+    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<{}>, snapshot?: any): void {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
     render() {
+
         return (
             <div>
+
                 {!this.state.editMode &&
-                <div>
-                    <span onDoubleClick={this.activateEditMode}>{this.state.status || '----'}</span>
-                </div>
+                    <div>
+                        <span onDoubleClick={this.activateEditMode}>{this.props.status || '----'}</span>
+                    </div>
                 }
                 {this.state.editMode &&
-                <div>
-                    <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.deactivateEditMode} value={this.props.status}/>
-                </div>
+                    <div>
+                        <input
+                            onKeyPress={this.handleKeyPress}
+                            onChange={this.onStatusChange}
+                            autoFocus={true}
+                            onBlur={this.deactivateEditMode}
+                            value={this.state.status}/>
+                    </div>
                 }
             </div>
         )
     }
 }
-//this.state.status - важно!!
-
-/*<MapStateToPropsType  & MapDispatchToPropsType & RouteComponentProps>
-
-const mapStateToProps =(state: AppStateType): MapStateToPropsType => ({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status
-    //isAuth: state.auth.isAuth,
-})}*/
-
-
 
 export type MapStateToPropsType = {
     status: string
-
 }
-
-
 
 export type MapDispatchToPropsType = {
     updateStatus: (status: string) => void

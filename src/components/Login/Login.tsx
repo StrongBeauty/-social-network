@@ -23,11 +23,11 @@ export type MapDispatchToPropsType = {
 
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
-const Login : React.FC<PropsType> = (props) => {
+const Login : React.FC<PropsType> = ({login, isAuth}) => {
     const {register, handleSubmit, formState: {errors}} = useForm<Inputs>()
     const onSubmit: SubmitHandler<Inputs> = data =>
-        props.login(data.email, data.password, data.rememberMe)
-    if (props.isAuth) {
+        login(data.email, data.password, data.rememberMe)
+    if (isAuth) {
         return <Redirect to={'/profile'} />
     }
 

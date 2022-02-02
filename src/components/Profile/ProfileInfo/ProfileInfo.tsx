@@ -3,6 +3,7 @@ import s from "./ProfileInfo.module.css"
 import {Preloader} from "../../common/preloader/preloader";
 import {ProfileType} from "../../../redux/profile-reducer";
 import {ProfileStatus} from "./ProfileStatus";
+import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 
 
 type PropsType = {
@@ -19,16 +20,20 @@ export const ProfileInfo = (props: PropsType) => {
     return(
         <div>
             <div>
-                <img src='http://dgdesign.ru/uploads/posts/2016-04/1461001405_shapka-sayta-gory-34342.jpg'/>
+                <img src='https://blog.prostodizain.ru/wp-content/uploads/2019/03/shapka-dlya-saita.jpg'
+                     alt='loading..'
+                />
             </div>
+            <ProfileStatusWithHooks status={props.status}
+                           updateStatus={props.updateStatus}/>
             <div className={s.descriptionBlock }>
-                <img src={props.profile.photos?.large}/>
-                <ProfileStatus status='Hello my friends'
-                               updateStatus={props.updateStatus}/>
+                <img src={props.profile.photos?.large}
+                     alt='loading..'
+                />
+                <div>{props.profile.fullName}</div>
+
             </div>
-            <h1>ddada</h1>
+            <h1>{props.profile.aboutMe}</h1>
         </div>
     )
 }
-
-//export default Profile;

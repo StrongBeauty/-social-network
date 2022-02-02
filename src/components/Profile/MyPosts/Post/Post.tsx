@@ -9,7 +9,7 @@ type PostPropsType = {
 export const Post: React.FC<PostPropsType> = (props ) => {
     return (
         <div className={s.item}>
-            <img src='https://mobila.guru/wp-content/uploads/2018/10/5-13.jpg'/>
+            <img src='https://mobila.guru/wp-content/uploads/2018/10/5-13.jpg' alt='loading..'/>
             {props.message}
             <div>
                 <span>Like-</span>

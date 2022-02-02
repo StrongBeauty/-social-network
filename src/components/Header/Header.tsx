@@ -11,13 +11,9 @@ type HeaderPropsType = {
 
 export const Header = (props: HeaderPropsType) => {
 
-    console.log('props', props.login)
-
-    console.log('dadada')
-
     return(
         <header className={s.header}>
-            <img src='https://i.pinimg.com/originals/43/20/c8/4320c8f26cfd8a002bd4c0ce0bd53492.png'/>
+            <img src='https://i.pinimg.com/originals/43/20/c8/4320c8f26cfd8a002bd4c0ce0bd53492.png' alt='loading..'/>
                 <div className={s.loginBlock}>
                     {props.isAuth
                         ? <div>{props.login}  <button onClick={props.logout}>Log out</button></div>

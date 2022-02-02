@@ -46,21 +46,11 @@ class App extends React.Component<MapStateToPropsType & MapDispatchToPropsType> 
                     <div className='app-wrapper-content'>
                         <Route path='/dialogs'
                                render={() => <DialogsContainer
-                                   //state={props.state}
-                                   //dispatch={props.dispatch}
-                                   //Dialogs
-                                   //dialogsPage={props.state.dialogsPage}
-                                   //dispatch={props.dispatch}
                                />}/>
                         <Route path='/profile/:userId?'
-                               render={() => <ProfileContainer  //state={props.state}
-                                   //profilePage={props.state.profilePage}
-                                   //                  dispatch={props.dispatch}
-                                   /*addPost={props.addPost}
-                                    updateNewPostText={props.updateNewPostText}*/
-                               />}/>
+                               render={() => <ProfileContainer />} />
                         <Route path='/users'
-                               render={() => <UsersContainer/>}/>
+                               render={() => <UsersContainer />} />
                         <Route path='/news'
                                render={() => <News/>}/>
                         <Route path='/music'

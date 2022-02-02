@@ -15,7 +15,7 @@ export const Dialogs: React.FC<DialogsPagePropsType> = (props) => {
         .map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
 
     let messagesElements = props.dialogsPage.messages
-        .map(m => <Message message={m.message} key={m.id}/>)
+        .map(m => <Message message={m.message} key={m.message}/>)
 
 
     // Не работает ввод, т.к. захордкоржэно значние!

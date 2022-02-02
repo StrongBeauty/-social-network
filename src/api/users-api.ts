@@ -3,31 +3,20 @@ import {GetItemsType, instance} from "./api";
 
 
 
-export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}`)
-            .then(response => {
+export const  usersAPI = {
+    async getUsers(currentPage: number, pageSize: number) {
+        const response = await instance.get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}`)
                 return response.data
-            })
     },
-    getNoUsers() {
-        return instance.get<GetItemsType>(`users`)
-            .then(response => {
+    async getNoUsers() {
+        const response = await instance.get<GetItemsType>(`users`)
                 return response.data
-            })
     },
-    follow(userTd: number) {
-        return instance.post(`follow/${userTd}`)
+    follow(userId: number) {
+        return instance.post(`follow/${userId}`)
 
     },
     unfollow(userTd: number) {
         return instance.delete(`follow/${userTd}`)
     },
-
-    /*getProfileUser(userId: number) {
-        return instance.get(`/profile/${userId}`)
-            .then(response => {
-                return response.data
-            })
-    },*/
 }

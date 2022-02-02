@@ -24,7 +24,7 @@ class HeaderContainer extends React.Component<MapStateToPropsType & MapDispatchT
 }
 
 const mapStateToProps =(state: AppStateType): MapStateToPropsType => {
-    console.log(' login: state.auth.data.emai',  state.auth.data.email)
+
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.data.email,
