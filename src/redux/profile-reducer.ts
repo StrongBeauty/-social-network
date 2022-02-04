@@ -35,10 +35,19 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 status: action.status
             }
 
-        case 'SN/PROFILE/DELETE-POST':
+        case 'SN/PROFILE/DELETE_POST':
             return {
                 ...state,
                 posts: state.posts.filter((p) => p.id !== action.postId)
+            }
+
+        case 'SN/PROFILE/SAVE_PHOTO':
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: action.photos
+                }
             }
         default:
             return state
@@ -57,7 +66,10 @@ export const actions = {
         ({type: 'SN/PROFILE/SET_USER_STATUS', status} as const),
 
     deletePost: (postId: number) =>
-        ({type: 'SN/PROFILE/DELETE-POST', postId} as const)
+        ({type: 'SN/PROFILE/DELETE_POST', postId} as const),
+
+    savePhoto: (photos: PhotosType) =>
+        ({type: 'SN/PROFILE/SAVE_PHOTO', photos} as const),
 }
 
 
@@ -75,12 +87,25 @@ export const getStatus = (userId: number) =>
 
 export const updateStatus = (status: string) =>
     async (dispatch: Dispatch) => {
-        const data = await profileAPI.updateStatus(status)
-        console.log(data)
+        try {
+            const data = await profileAPI.updateStatus(status)
+
+            if (data.resultCode === 0) {
+                dispatch(actions.setStatus(status))
+            }
+        } catch (error) {
+            alert('some error')
+        }
+    }
+export const savePhoto = (photoFile: File) =>
+    async (dispatch: Dispatch) => {
+        const data = await profileAPI.savePhoto(photoFile)
+
         if (data.resultCode === 0) {
-            console.log(status)
-            dispatch(actions.setStatus(status))
-        }}
+            dispatch(actions.savePhoto(data.data.photos))
+        }
+    }
+
 
 type ActionsType = InferActionsTypes<typeof actions>
 
@@ -97,20 +122,23 @@ export type ProfileType = {
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     fullName: string,
-    contacts: {
-        facebook: string,
-        github: string,
-        instagram: string,
-        mainLink: string,
-        twitter: string,
-        vk: string,
-        website: string,
-        youtube: string,
-    }
+    contacts: ContactsType,
     aboutMe: string,
-    photos: {
-        large: string,
-        small: string,
-    }
+    photos: PhotosType
+}
 
+type PhotosType = {
+    large: string,
+    small: string,
+}
+
+export type ContactsType = {
+    facebook: string,
+    github: string,
+    instagram: string,
+    mainLink: string,
+    twitter: string,
+    vk: string,
+    website: string,
+    youtube: string,
 }

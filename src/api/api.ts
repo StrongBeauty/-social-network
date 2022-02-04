@@ -4,7 +4,7 @@ import {UserType} from "../redux/users-reducer";
 
 export const instance = axios.create({
     withCredentials: true,
-    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+    baseURL: 'https://social-network.samuraijs.com/api/1.0',
     headers: {
         'API-KEY': '054f8216-62dd-456e-9d45-b11474987d99'
     }
@@ -12,7 +12,8 @@ export const instance = axios.create({
 
 export enum ResultCodeEnum {
     Succes = 0,
-    Error,
+    Captcha = 10,
+    Error = 1 ,
 }
 
 

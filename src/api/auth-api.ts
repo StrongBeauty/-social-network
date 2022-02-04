@@ -15,6 +15,7 @@ export const authAPI = {
     },
 }
 
+
 type  LoginResponseDataType = {
     userId: number
 }

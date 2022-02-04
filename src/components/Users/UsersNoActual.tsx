@@ -6,7 +6,7 @@ import {
     OwnPropsDialogsContainerType
 } from "./UsersContainer"
 import * as axios from "axios";
-import userPhoto from '../../../src/assets/images/user.jpg'
+import userPhoto from '../../assets/images/userPhoto.jpg'
 
 type UsersPagePropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsDialogsContainerType
 
