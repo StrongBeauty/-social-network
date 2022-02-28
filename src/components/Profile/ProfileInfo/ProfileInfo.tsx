@@ -1,26 +1,23 @@
 import React, {useState} from "react";
 import s from "./ProfileInfo.module.css"
 import {Preloader} from "../../common/preloader/preloader";
-import {ContactsType, ProfileType} from "../../../redux/profile-reducer";
+import {ContactsType, ProfileType, savePhoto} from "../../../redux/profile-reducer";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import userPhoto from '../../../assets/images/userPhoto.jpg'
+import {useDispatch, useSelector} from "react-redux";
+import {selectProfile, selectStatus} from "../../../redux/profile-selector";
 
 
 type ProfileInfoPropsType = {
-    profile: ProfileType
-    status: string
-    updateStatus: (status: string) => void
     isOwner: boolean
-    savePhoto: (photo: File) => void
 }
 
-export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
-                                                                profile,
-                                                                status,
-                                                                updateStatus,
-                                                                isOwner,
-                                                                savePhoto,
-                                                            }: ProfileInfoPropsType) => {
+export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({isOwner}: ProfileInfoPropsType) => {
+
+    const status = useSelector(selectStatus)
+    const profile = useSelector(selectProfile)
+    const dispatch = useDispatch()
+
     const [editMode, setEditMode] = useState(false)
 
     if (!profile) {
@@ -29,10 +26,9 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
 
     const onMainPhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
-            savePhoto(e.target.files[0])
+            dispatch(savePhoto(e.target.files[0]))
         }
     }
-
 
     return (
 
@@ -42,8 +38,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                      alt='loading..'
                 />
             </div>
-            <ProfileStatusWithHooks status={status}
-                                    updateStatus={updateStatus}/>
+            <ProfileStatusWithHooks status={status} />
             <div className={s.descriptionBlock}>
                 <img className={s.photo} src={profile.photos?.large || userPhoto}
                      alt='loading..'

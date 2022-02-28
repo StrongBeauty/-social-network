@@ -1,0 +1,12 @@
+.page {
+    height: 92vh;
+}
+
+.chat {
+    height: 65vh;
+    overflow-y: auto;
+}
+
+.chat__photo {
+    width: 30px;
+}

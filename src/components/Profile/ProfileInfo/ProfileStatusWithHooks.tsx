@@ -1,16 +1,16 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
+import {updateStatus} from "../../../redux/profile-reducer";
 
 type ProfileStatusPropsType = {
     status: string
-    updateStatus: (status: string) => void
 }
 
-export const ProfileStatusWithHooks = ({
-                                           status,
-                                           updateStatus
-                                       }: ProfileStatusPropsType) => {
+export const ProfileStatusWithHooks = ({status}: ProfileStatusPropsType) => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [newStatus, setNewStatus] = useState<string>(status)
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setNewStatus(status)
@@ -22,7 +22,7 @@ export const ProfileStatusWithHooks = ({
 
     const deactivateEditMode = () => {
         setEditMode(false)
-        updateStatus(newStatus)
+        dispatch(updateStatus(newStatus))
     }
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
@@ -35,22 +35,6 @@ export const ProfileStatusWithHooks = ({
         setNewStatus(updateStatusTrim)
 
     }
-
-/*    componentDidUpdate(prevProps
-:
-    Readonly < ProfileStatusPropsType >, prevState
-:
-    Readonly < {} >, snapshot ? : any
-):
-    void {
-        if(prevProps.status !== this.props.status
-)
-    {
-        this.setState({
-            status: this.props.status
-        })
-    }
-}*/
 
 
     return (
@@ -73,13 +57,5 @@ export const ProfileStatusWithHooks = ({
             }
         </div>
     )
-}
-
-export type MapStateToPropsType = {
-    status: string
-}
-
-export type MapDispatchToPropsType = {
-    updateStatus: (status: string) => void
 }
 

@@ -6,6 +6,7 @@ import {usersReducer} from "./users-reducer";
 import { authReducer} from "./auth-reducer";
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import {appReducer} from "./app-reducer";
+import {chatReducer} from "./chat-reducer";
 
 declare global {
     interface Window {
@@ -21,6 +22,7 @@ const reducer = combineReducers({
     usersPage: usersReducer,
     auth: authReducer,
     app: appReducer,
+    chat: chatReducer,
 })
 
 const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

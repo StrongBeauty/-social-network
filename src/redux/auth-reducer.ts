@@ -14,7 +14,7 @@ export const authReducer = (state: AuthPageType = initialState, action: ActionsT
         case 'SN/AUTH/SET_USERS_DATA':
             return {
                 ...state,
-                ...action.data,
+                data: action.data,
                 isAuth: action.isAuth,
             }
 
@@ -54,9 +54,9 @@ export const getCaptchaUrl = (): ThunkType =>
         dispatch(actions.getCaptchaUrl(response.data.url))
     }
 
-export const login = (email: string, password: string, rememberMe: boolean): ThunkType =>
+export const loginThunk = (email: string, password: string, rememberMe: boolean, captcha?: string): ThunkType =>
     async (dispatch) => {
-        const response = await authAPI.login(email, password, rememberMe)
+        const response = await authAPI.login(email, password, rememberMe, captcha)
         if (response.data.resultCode === 0) {
             dispatch(getAuthUserData())
         } else if (response.data.resultCode === 10) {

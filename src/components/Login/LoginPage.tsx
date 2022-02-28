@@ -1,8 +1,9 @@
 import React from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {connect} from "react-redux";
-import {login} from "../../redux/auth-reducer";
-import {AppStateType} from "../../redux/redux-store";
+import {useDispatch, useSelector} from "react-redux";
+import {loginThunk} from "../../redux/auth-reducer";
+import {selectCaptchaUrl, selectIsAuth} from "../../redux/auth-selector";
+import {loginRedirect} from "../../utils/redirect-helpers";
 import {Redirect} from "react-router-dom";
 
 
@@ -13,21 +14,16 @@ type Inputs = {
     captcha?: string
 }
 
-export type MapStateToPropsType = {
-    isAuth: boolean
-    captchaUrl: string
-}
+export const LoginPage: React.FC = () => {
 
-export type MapDispatchToPropsType = {
-    login: (email: string, password: string, rememberMe: boolean, captcha?: string) => void
-}
+    const isAuth = useSelector(selectIsAuth)
+    const captchaUrl = useSelector(selectCaptchaUrl)
 
-type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
+    const dispatch = useDispatch()
 
-const Login: React.FC<LoginPropsType> = ({login, isAuth, captchaUrl}) => {
     const {register, handleSubmit, formState: {errors}} = useForm<Inputs>()
     const onSubmit: SubmitHandler<Inputs> = data =>
-        login(data.email, data.password, data.rememberMe, data.captcha)
+        dispatch(loginThunk(data.email, data.password, data.rememberMe, data.captcha))
 
     if (isAuth) {
         return <Redirect to={'/profile'}/>
@@ -48,7 +44,7 @@ const Login: React.FC<LoginPropsType> = ({login, isAuth, captchaUrl}) => {
                     <input type='checkbox' {...register('rememberMe')} /> remember me
                 </div>
                 {captchaUrl && <>
-                    <img src={captchaUrl}/>
+                    <img src={captchaUrl} alt='loading...'/>
                     <div>
                         <input {...register('captcha', {required: true})} placeholder={'Symbols from image'}/>
                     </div>
@@ -62,13 +58,4 @@ const Login: React.FC<LoginPropsType> = ({login, isAuth, captchaUrl}) => {
     )
 }
 
-
-let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
-    return {
-        isAuth: state.auth.isAuth,
-        captchaUrl: state.auth.captchaUrl
-    }
-}
-
-export default connect(mapStateToProps, {login})(Login)
 
