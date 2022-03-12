@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {loginThunk} from "../../redux/auth-reducer";
 import {selectCaptchaUrl, selectIsAuth} from "../../redux/auth-selector";
-import {loginRedirect} from "../../utils/redirect-helpers";
-import {Redirect} from "react-router-dom";
 
 
 type Inputs = {
@@ -19,15 +18,18 @@ export const LoginPage: React.FC = () => {
     const isAuth = useSelector(selectIsAuth)
     const captchaUrl = useSelector(selectCaptchaUrl)
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const {register, handleSubmit, formState: {errors}} = useForm<Inputs>()
     const onSubmit: SubmitHandler<Inputs> = data =>
         dispatch(loginThunk(data.email, data.password, data.rememberMe, data.captcha))
 
-    if (isAuth) {
-        return <Redirect to={'/profile'}/>
-    }
+   useEffect(() => {
+       if (isAuth) {
+           navigate('/', {replace: true})
+       }
+   }, [isAuth])
 
     return (
         <div>

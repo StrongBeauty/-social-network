@@ -1,31 +1,35 @@
 import React from "react"
 import s from "./Navbar.module.css"
 import {NavLink} from "react-router-dom";
-//console.log(s)
+import { selectAuthorizedUserId } from "../../redux/auth-selector";
+import {useSelector} from "react-redux";
+
 
 export const Navbar = () => {
+    const userId = useSelector(selectAuthorizedUserId)
+
     return(
         <nav className={s.nav}>
             <div className={s.item}>
-                <NavLink to='/profile' activeClassName={s.activeLink}>Profile</NavLink>
+                <NavLink to={`profile/${userId}`}>Profile</NavLink>
             </div>
             <div className={`${s.item} ${s.active}`}>
-                <NavLink to='/dialogs' activeClassName={s.activeLink}>Messages</NavLink>
+                <NavLink to='dialogs'>Messages</NavLink>
             </div>
             <div className={`${s.item} ${s.active}`}>
-                <NavLink to='/users' activeClassName={s.activeLink}>Users</NavLink>
+                <NavLink to='users'>Users</NavLink>
             </div>
             <div className={`${s.item} ${s.active}`}>
-                <NavLink to='/chat' activeClassName={s.activeLink}>Chat</NavLink>
+                <NavLink to='chat'>Chat</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to='/news' activeClassName={s.activeLink}>News</NavLink>
+                <NavLink to='news'>News</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to='/music' activeClassName={s.activeLink}>Music</NavLink>
+                <NavLink to='music'>Music</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to='/settings' activeClassName={s.activeLink}>Settings</NavLink>
+                <NavLink to='settings'>Settings</NavLink>
             </div>
         </nav>
     )

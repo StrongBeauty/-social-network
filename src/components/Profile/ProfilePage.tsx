@@ -1,40 +1,45 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getStatus, getUserProfile} from "../../redux/profile-reducer";
-import {useParams, useHistory} from 'react-router';
+import {useParams} from 'react-router';
 import {selectAuthorizedUserId} from "../../redux/auth-selector";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {Redirect} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type ParamsType = {
     userId: string
 }
 
- const ProfilePage = () => {
+const ProfilePage = () => {
 
     const authorizedUserId = useSelector(selectAuthorizedUserId)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    console.log(!null)
 
     const params = useParams() as ParamsType
-    const history = useHistory()
+    const isOwner = (+params.userId === authorizedUserId)
 
 
     useEffect(() => {
-        let userId = params.userId ? params.userId : '11851'
-        if (!userId) {
-            userId = String(authorizedUserId)
-            if (+userId) {
-                history.push('/login')
+        let userId = params.userId
+
+        if (userId === 'undefined' && !authorizedUserId) {
+            navigate('login', {replace: true})
+        } else {
+            if(userId === 'undefined' && authorizedUserId){
+                userId = String(authorizedUserId)
+                console.log(userId)
             }
+            dispatch(getUserProfile(+userId))
+            dispatch(getStatus(+userId))
         }
-        dispatch(getUserProfile(+userId))
-        dispatch(getStatus(+userId))
-    }, [])
+    }, [params.userId])
 
     return (
         <div>
-            <ProfileInfo isOwner={!params} />
+            <ProfileInfo isOwner={isOwner}/>
             <MyPostsContainer/>
         </div>
     )

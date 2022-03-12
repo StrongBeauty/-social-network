@@ -1,5 +1,5 @@
 import React, {ComponentType} from "react";
-import {Redirect} from "react-router-dom";
+/*import {Redirect} from "react-router-dom";
 import {AppStateType} from "../redux/redux-store";
 import {connect} from "react-redux";
 
@@ -24,4 +24,4 @@ export function withAuthRedirect<WCP>(WrappedComponent: ComponentType<WCP>) {
 
     let  ConnectedAuthRedirectComponent = connect(mapStateToPropsRedirect)(RedirectComponent)
     return ConnectedAuthRedirectComponent
-}
+}*/

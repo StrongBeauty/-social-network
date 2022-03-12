@@ -4,11 +4,13 @@ import {ChatMessageType} from "../../api/chat-api";
 import {useDispatch, useSelector} from "react-redux";
 import {sendMessage, startMessagesListening, stopMessagesListening} from "../../redux/chat-reducer";
 import {selectMessages} from "../../redux/chat-selector";
+import { selectIsAuth } from '../../redux/auth-selector';
+//import {Redirect} from "react-router-dom"
 
 
 export const ChatPage: React.FC = () => {
-
-   const dispatch = useDispatch()
+    const dispatch = useDispatch()
+    const isAuth = useSelector(selectIsAuth)
 
     useEffect(() => {
         dispatch(startMessagesListening())
@@ -17,9 +19,14 @@ export const ChatPage: React.FC = () => {
         }
     }, [])
 
+
+/*    if (!isAuth) {
+        return <Redirect to={'/login'}/>
+    }*/
+
     return <div className={style.page}>
-        <Messages />
-        <AddMessagesForm />
+        <Messages/>
+        <AddMessagesForm/>
     </div>
 }
 
@@ -29,9 +36,9 @@ export default ChatPage
 export const Messages: React.FC = () => {
     const messages = useSelector(selectMessages)
 
-return <div className={style.chat}>
-    {messages.map((m, index) => <Message key={index} messagePack={m}/>)}
-</div>
+    return <div className={style.chat}>
+        {messages.map((m, index) => <Message key={index} messagePack={m}/>)}
+    </div>
 }
 
 

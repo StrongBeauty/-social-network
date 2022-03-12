@@ -12,7 +12,7 @@ import {
 } from "../../redux/users-selector";
 import {selectIsAuth} from "../../redux/auth-selector";
 import {usersAPI} from "../../api/users-api";
-import {useHistory} from 'react-router';
+//import {useHistory} from 'react-router';
 
 type QueryParamsType = {
     page: string
@@ -28,10 +28,11 @@ export const Users: React.FC = () => {
     const isAuth = useSelector(selectIsAuth)
     //const filter = useSelector(selectUsersFilter)
     const dispatch = useDispatch()
-    const history = useHistory() as any
+   // const history = useHistory() as any
 
-    useEffect(() => {
+    /*useEffect(() => {
         const searchParams  = new URLSearchParams(history.location.search)
+        console.log(searchParams)
         const page = searchParams.get('page')
         let actualPage = currentPage
 
@@ -47,7 +48,7 @@ export const Users: React.FC = () => {
             pathname: '/users',
             search: new URLSearchParams(query).toString() //?page=${currentPage}` //`?term=${filter.term}${filter.friend}&page=${currentPage}`
         })
-    }, [currentPage])
+    }, [currentPage])*/
 
     const follow = (userId: number) => {
         dispatch(followThunk(userId))

@@ -1,14 +1,23 @@
-import React from "react"
+import React, { useEffect } from "react"
 import s from "./Header.module.css"
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuth, selectLogin} from "../../redux/auth-selector";
 import {logout} from "../../redux/auth-reducer";
+import { useNavigate } from "react-router-dom";
+
 
 export const Header: React.FC = () => {
     const login = useSelector(selectLogin)
     const isAuth = useSelector(selectIsAuth)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!isAuth) {
+            navigate('login', {replace: true})
+        }
+    }, [isAuth])
 
     const onLogout = () => {
         dispatch(logout())
@@ -24,7 +33,7 @@ export const Header: React.FC = () => {
                     ? <div>{login}
                         <button onClick={onLogout}>Log out</button>
                     </div>
-                    : <NavLink to={'./login'}>Login</NavLink>
+                    : <NavLink to={'login'}>Login</NavLink>
                 }
             </div>
         </header>

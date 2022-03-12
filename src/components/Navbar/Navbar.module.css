@@ -13,3 +13,8 @@
 .item a.activeLink{
     color: lightgrey;
 }
+
+.active{
+    color: royalblue;
+    cursor: default;
+}

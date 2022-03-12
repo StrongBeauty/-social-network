@@ -68,7 +68,7 @@ export const logout = (): ThunkType =>
     async (dispatch) => {
         const response = await authAPI.logout()
         if (response.data.resultCode === 0) {
-            dispatch(actions.setAuthUsersData({id: -1, login: '', email: ''}, false))
+            dispatch(actions.setAuthUsersData({id: '', login: '', email: ''}, false))
         }
     }
 
@@ -85,7 +85,7 @@ export type AuthType = {
 }
 
 export type DataType = {
-    id: number
+    id: number | ''
     login: string
     email: string
 }

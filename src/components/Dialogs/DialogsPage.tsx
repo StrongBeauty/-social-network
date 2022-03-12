@@ -2,14 +2,12 @@ import React, {FC} from 'react'
 import s from "./Dialogs.module.css"
 import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-import {Redirect} from "react-router-dom"
+//
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {selectDialogs, selectMessages} from "../../redux/dialogs-selector";
 import {selectIsAuth} from "../../redux/auth-selector";
 import {actions} from "../../redux/dialogs-reducer";
-import {loginRedirect} from "../../utils/redirect-helpers";
-
 
 const DialogsPage: React.FC = () => {
     const messages = useSelector(selectMessages)
@@ -18,12 +16,14 @@ const DialogsPage: React.FC = () => {
     const dispatch = useDispatch()
 
     let dialogsElements = dialogs
-        .map(d => <DialogItem name={d.name} key={d.id} id={d.id}/>)
+        .map(d => <DialogItem name={d.name} key={d.id + Math.random()} id={d.id}/>)
 
     let messagesElements = messages
         .map(m => <Message message={m.message} />)
 
-    loginRedirect(isAuth)
+/*    if (!isAuth) {
+        return <Redirect to={'/login'}/>
+    }*/
 
     const sendMessage = (newMessage: string) => {
         dispatch(actions.sendMessageActionCreator(newMessage))
