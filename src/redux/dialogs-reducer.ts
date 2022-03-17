@@ -1,3 +1,4 @@
+import { PhotosType } from "./profile-reducer";
 import {InferActionsTypes} from "./redux-store";
 
 const initialState = {
@@ -45,8 +46,15 @@ type ActionsType = InferActionsTypes<typeof actions>
 export type DialogType = {
     id: number
     name: string
+    userName: string,
+    hasNewMessages: boolean,
+    lastDialogActivityDate: string,
+    lastUserActivityDate: string,
+    newMessagesCount: 0,
+    photos: PhotosType
 }
 export type MessageType = {
     id: number
     message: string
 }
+

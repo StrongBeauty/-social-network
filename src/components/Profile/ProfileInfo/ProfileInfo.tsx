@@ -6,14 +6,17 @@ import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
 import userPhoto from '../../../assets/images/userPhoto.jpg'
 import {useDispatch, useSelector} from "react-redux";
 import {selectProfile, selectStatus} from "../../../redux/profile-selector";
+import { ProfileDataForm } from "./ProfileData/ProfileDataForm";
+import { ProfileData } from "./ProfileData/ProfileData";
 
 
 type ProfileInfoPropsType = {
     isOwner: boolean
 }
 
-export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({isOwner}: ProfileInfoPropsType) => {
-
+export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
+                                                                isOwner
+                                                            }: ProfileInfoPropsType) => {
     const status = useSelector(selectStatus)
     const profile = useSelector(selectProfile)
     const dispatch = useDispatch()
@@ -31,23 +34,29 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({isOwner}: ProfileIn
     }
 
     return (
-
         <div>
             <div>
                 <img src='https://blog.prostodizain.ru/wp-content/uploads/2019/03/shapka-dlya-saita.jpg'
                      alt='loading..'
                 />
             </div>
-            <ProfileStatusWithHooks status={status} />
+            <ProfileStatusWithHooks status={status}/>
             <div className={s.descriptionBlock}>
                 <img className={s.photo} src={profile.photos?.large || userPhoto}
                      alt='loading..'
                 />
                 {isOwner &&
-                <input type='file'
-                       name='Download photo'
-                       onChange={onMainPhotoSelected}
-                />}
+                    <>
+                        <input type='file'
+                               className={s.btn}
+                               name='Download photo'
+                               id='img'
+                               onChange={onMainPhotoSelected}
+                        />
+                        <span><label className={s.btn__custom} htmlFor='img'>Select photo</label></span>
+                    </>
+                }
+
                 {editMode ? <ProfileDataForm/> : <ProfileData lookingForAJob={profile.lookingForAJob}
                                                               lookingForAJobDescription={profile.lookingForAJobDescription}
                                                               fullName={profile.fullName}
@@ -62,44 +71,4 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({isOwner}: ProfileIn
     )
 }
 
-type ContactPropsType = {
-    contactTitle: keyof ContactsType,
-    contactValue: string
-}
 
-type ProfileDataPropsType = Omit<ProfileType, 'userId' | 'photos'> & {isOwner: boolean} & {goToEditMode: () => void}
-
-const ProfileData = ({lookingForAJob, lookingForAJobDescription, fullName, contacts, aboutMe, isOwner, goToEditMode}: ProfileDataPropsType) => {
-    return <>
-        <div>{fullName}</div>
-        <div>
-            <b>Looking for a job:</b> {lookingForAJob ? 'yes' : 'no'}
-        </div>
-        <div>
-            <b>My professionals skills:</b> {lookingForAJobDescription}
-        </div>
-        <div>
-            <b>About me:</b> {aboutMe}
-        </div>
-        <div>
-            <b>Contacts:</b> {contacts &&
-        (Object.keys(contacts) as Array<keyof ContactsType>).map(
-            (k: keyof ContactsType) => {
-                return <Contact
-                    key={k}
-                    contactValue={contacts[k]}
-                    contactTitle={k}
-                />
-            })}
-            {isOwner && <div><button onClick={goToEditMode}>edit</button></div>}
-        </div>
-    </>
-}
-
-const ProfileDataForm = () => {
-    return <div>form</div>
-}
-
-const Contact: React.FC<ContactPropsType> = ({contactTitle, contactValue}: ContactPropsType) => {
-    return <div><b>{contactTitle}:</b> {contactValue}</div>
-}

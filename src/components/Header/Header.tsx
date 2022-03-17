@@ -3,7 +3,7 @@ import s from "./Header.module.css"
 import {Link, NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuth, selectLogin} from "../../redux/auth-selector";
-import {logout} from "../../redux/auth-reducer";
+import {logoutThunk} from "../../redux/auth-reducer";
 import { useNavigate } from "react-router-dom";
 
 
@@ -20,7 +20,7 @@ export const Header: React.FC = () => {
     }, [isAuth])
 
     const onLogout = () => {
-        dispatch(logout())
+        dispatch(logoutThunk())
     }
 
     return (

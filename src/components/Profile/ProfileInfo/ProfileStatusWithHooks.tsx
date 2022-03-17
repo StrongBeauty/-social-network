@@ -19,7 +19,6 @@ export const ProfileStatusWithHooks = ({status}: ProfileStatusPropsType) => {
     const activateEditMode = () => {
         setEditMode(true)
     }
-
     const deactivateEditMode = () => {
         setEditMode(false)
         dispatch(updateStatus(newStatus))
@@ -36,10 +35,8 @@ export const ProfileStatusWithHooks = ({status}: ProfileStatusPropsType) => {
 
     }
 
-
     return (
         <div>
-
             {!editMode &&
                 <div>
                     <span onDoubleClick={activateEditMode}>{status || '----'}</span>

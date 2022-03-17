@@ -4,8 +4,8 @@ import {getStatus, getUserProfile} from "../../redux/profile-reducer";
 import {useParams} from 'react-router';
 import {selectAuthorizedUserId} from "../../redux/auth-selector";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import { useNavigate } from "react-router-dom";
+import { MyPosts } from "./MyPosts/MyPosts";
 
 type ParamsType = {
     userId: string
@@ -16,31 +16,26 @@ const ProfilePage = () => {
     const authorizedUserId = useSelector(selectAuthorizedUserId)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    console.log(!null)
-
     const params = useParams() as ParamsType
-    const isOwner = (+params.userId === authorizedUserId)
 
+    let userId = params.userId
 
     useEffect(() => {
-        let userId = params.userId
-
         if (userId === 'undefined' && !authorizedUserId) {
-            navigate('login', {replace: true})
+            navigate('/login', {replace: true})
         } else {
             if(userId === 'undefined' && authorizedUserId){
                 userId = String(authorizedUserId)
-                console.log(userId)
             }
             dispatch(getUserProfile(+userId))
             dispatch(getStatus(+userId))
         }
-    }, [params.userId])
+    }, [userId])
 
     return (
         <div>
-            <ProfileInfo isOwner={isOwner}/>
-            <MyPostsContainer/>
+            <ProfileInfo isOwner={+userId === authorizedUserId}/>
+            <MyPosts />
         </div>
     )
 }

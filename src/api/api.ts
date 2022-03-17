@@ -16,17 +16,16 @@ export enum ResultCodeEnum {
     Error = 1 ,
 }
 
-
-export type GetItemsType = {
-    items: Array<UserType>
-    totalCount: number
-    error: string
-}
-
-export type ResponseType<D = {}, RC = ResultCodeEnum> = {
+export type OperationObjectType<D = {}, RC = ResultCodeEnum> = {
     data: D
     messages: Array<string>
     resultCode: RC
+}
+
+export type GetItemsType<T> = {
+    items: T[]
+    totalCount: number
+    error: string
 }
 
 

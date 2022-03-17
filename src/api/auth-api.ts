@@ -1,13 +1,13 @@
-import {ResponseType, instance} from "./api";
+import {instance, OperationObjectType, ResultCodeEnum} from "./api";
 import {DataType} from "../redux/auth-reducer";
 
 export const authAPI = {
     me() {
-        return instance.get<ResponseType<DataType>>(`/auth/me`)
+        return instance.get<OperationObjectType<DataType>>(`/auth/me`)
     },
 
     login(email: string, password: string, rememberMe: boolean = false, captcha?: string) {
-        return instance.post<ResponseType<LoginResponseDataType>>(`/auth/login`, {email, password, rememberMe, captcha})
+        return instance.post<OperationObjectType<LoginResponseDataType>>(`/auth/login`, {email, password, rememberMe, captcha})
     },
 
     logout() {
@@ -15,7 +15,8 @@ export const authAPI = {
     },
 }
 
-
 type  LoginResponseDataType = {
     userId: number
 }
+
+

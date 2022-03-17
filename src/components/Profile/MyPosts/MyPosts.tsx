@@ -1,19 +1,27 @@
 import React from "react";
 import s from "./MyPosts.module.css"
 import {Post} from "./Post/Post";
-import {MapDispatchToPropsType, MapStateToPropsType, OwnPropsDialogsContainerType} from "./MyPostsContainer";
 import {SubmitHandler, useForm} from "react-hook-form";
+import {actions, PostType } from "../../../redux/profile-reducer";
+import {useDispatch, useSelector } from "react-redux";
+import { selectPosts } from "../../../redux/profile-selector";
 
+type Inputs = {
+    newPostText: string
+}
 
-type MyPostsPagePropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsDialogsContainerType
+export const MyPosts : React.FC = React.memo(() => {
+    const posts = useSelector(selectPosts)
+    const dispatch = useDispatch()
 
-export const MyPosts : React.FC<MyPostsPagePropsType> = React.memo((props ) => {
-
-    let postsElements = props.posts
+    let postsElements = posts
         .map(p => <Post key={p.message} message = {p.message} likesCount={p.likesCount} />)
 
-    const {register, handleSubmit, formState: {errors}} = useForm<Inputs>()
-    const onSubmit: SubmitHandler<Inputs> = values => props.addPost(values.newPostText)
+    const {register, handleSubmit, formState: {errors}, reset} = useForm<Inputs>()
+    const onSubmit: SubmitHandler<Inputs> = values => {
+        dispatch(actions.addPost(values.newPostText))
+        reset()
+    }
 
     return (
         <div className={s.postsBlock}>
@@ -25,8 +33,7 @@ export const MyPosts : React.FC<MyPostsPagePropsType> = React.memo((props ) => {
                 </div>
                 {(errors.newPostText) && <span>Field is required</span>}
                 <div>
-                    <button
-                        >
+                    <button>
                         Add post
                     </button>
                 </div>
@@ -37,8 +44,4 @@ export const MyPosts : React.FC<MyPostsPagePropsType> = React.memo((props ) => {
         </div>
     )
 })
-
-type Inputs = {
-    newPostText: string
-}
 

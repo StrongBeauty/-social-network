@@ -2,6 +2,7 @@ import {Dispatch} from "redux";
 import {BaseThunkType, InferActionsTypes} from "./redux-store";
 import {usersAPI} from "../api/users-api";
 import {updateObjectInArray} from "../utils/object-helpers";
+import { PhotosType } from "./profile-reducer";
 
 const initialState = {
     users: [] as UserType[],
@@ -128,10 +129,10 @@ export type UserType = {
     location: LocationType
 }
 
-export type PhotosType = {
+/*export type PhotosType = {
     small: string | null,
     large: string | null
-}
+}*/
 
 export type LocationType = {
     city: string

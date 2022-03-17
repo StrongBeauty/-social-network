@@ -5,4 +5,14 @@
 .photo {
     width: 200px;
     higth: 200px;
+    padding-right: 0.5%;
+}
+
+.btn {
+    display: none;
+    cursor: pointer;
+}
+
+.btn__custom {
+    cursor: pointer;
 }

@@ -127,9 +127,9 @@ export type ProfileType = {
     photos: PhotosType
 }
 
-type PhotosType = {
-    large: string,
-    small: string,
+export type PhotosType = {
+    small: string | null,
+    large: string | null
 }
 
 export type ContactsType = {

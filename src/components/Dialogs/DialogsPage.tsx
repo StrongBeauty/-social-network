@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectDialogs, selectMessages} from "../../redux/dialogs-selector";
 import {selectIsAuth} from "../../redux/auth-selector";
 import {actions} from "../../redux/dialogs-reducer";
+import { dialogsAPI } from '../../api/dialogs-api';
 
 const DialogsPage: React.FC = () => {
     const messages = useSelector(selectMessages)

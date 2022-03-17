@@ -12,7 +12,7 @@ import {
 } from "../../redux/users-selector";
 import {selectIsAuth} from "../../redux/auth-selector";
 import {usersAPI} from "../../api/users-api";
-//import {useHistory} from 'react-router';
+import {useSearchParams} from "react-router-dom";
 
 type QueryParamsType = {
     page: string
@@ -28,27 +28,23 @@ export const Users: React.FC = () => {
     const isAuth = useSelector(selectIsAuth)
     //const filter = useSelector(selectUsersFilter)
     const dispatch = useDispatch()
-   // const history = useHistory() as any
+    const [searchParams, setsearchParams] = useSearchParams()
 
-    /*useEffect(() => {
-        const searchParams  = new URLSearchParams(history.location.search)
-        console.log(searchParams)
+    useEffect(() => {
         const page = searchParams.get('page')
         let actualPage = currentPage
 
         if (!!page) actualPage = Number(page)
         dispatch(requestUsers(actualPage, pageSize))
-        console.log(page)
+
     }, [])
 
-        useEffect(() => {
-            const query = {} as QueryParamsType
-            if (currentPage !==1) query.page = String(currentPage)
-        history.push({
-            pathname: '/users',
-            search: new URLSearchParams(query).toString() //?page=${currentPage}` //`?term=${filter.term}${filter.friend}&page=${currentPage}`
-        })
-    }, [currentPage])*/
+    useEffect(() => {
+        const query = {} as QueryParamsType
+        if (currentPage !== 1) query.page = String(currentPage)
+        setsearchParams(query)
+        //?page=${currentPage}` //`?term=${filter.term}${filter.friend}&page=${currentPage}`
+    }, [currentPage])
 
     const follow = (userId: number) => {
         dispatch(followThunk(userId))
@@ -66,9 +62,9 @@ export const Users: React.FC = () => {
                 dispatch(actions.setUsers(data.items))
             })
     }
-/*    const onFilterChanged = (filter: FilterType) => {
-        dispatch(requestUsers(1, pageSize, filter))
-    }*/
+    /*    const onFilterChanged = (filter: FilterType) => {
+            dispatch(requestUsers(1, pageSize, filter))
+        }*/
 
     return <div>
         <Paginator currentPage={currentPage}

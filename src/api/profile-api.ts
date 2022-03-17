@@ -1,4 +1,5 @@
-import {instance} from "./api";
+import { ProfileType } from "../redux/profile-reducer";
+import {instance, OperationObjectType} from "./api";
 
 export const profileAPI = {
 
@@ -8,13 +9,18 @@ export const profileAPI = {
 
     },
 
+    async setProfile(profile: ProfileType) {
+        const response = await instance.put<OperationObjectType>(`profile`, {profile})
+    },
+
     async getStatus(userId: number) {
-        const response = await instance.get(`/profile/status/${userId}`)
+        const response = await instance.get<string>(`/profile/status/${userId}`)
+
         return response.data
     },
 
     async updateStatus(status: string) {
-        const response = await instance.put(`/profile/status`, {status: status})
+        const response = await instance.put<OperationObjectType>(`/profile/status`, {status: status})
         return response.data
     },
 
