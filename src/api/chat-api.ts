@@ -9,7 +9,6 @@ const messageHandler = (e: MessageEvent) => {
 }
 
 const closeHandler = () => {
-    console.log('close ws')
     setTimeout(() => createChanel(), 3000)
 }
 
