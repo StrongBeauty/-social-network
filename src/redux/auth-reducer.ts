@@ -84,7 +84,7 @@ export type AuthType = {
     data: DataType
 }
 
-export type DataType = {
+export type AuthDataType = {
     id: number | ''
     login: string
     email: string
