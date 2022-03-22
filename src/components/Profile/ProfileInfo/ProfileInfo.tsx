@@ -1,13 +1,14 @@
 import React, {useState} from "react";
 import s from "./ProfileInfo.module.css"
 import {Preloader} from "../../common/preloader/preloader";
-import {ContactsType, ProfileType, savePhoto} from "../../../redux/profile-reducer";
+import {savePhoto} from "../../../redux/profile-reducer";
 import {ProfileStatusWithHooks} from "./ProfileStatusWithHooks";
-import userPhoto from '../../../assets/images/userPhoto.jpg'
+import avatarLarge from "../../../assets/images/avatarLarge.png";
 import {useDispatch, useSelector} from "react-redux";
 import {selectProfile, selectStatus} from "../../../redux/profile-selector";
-import { ProfileDataForm } from "./ProfileData/ProfileDataForm";
-import { ProfileData } from "./ProfileData/ProfileData";
+import {ProfileDataForm} from "./ProfileData/ProfileDataForm";
+import {ProfileData} from "./ProfileData/ProfileData";
+import {MainUserInformation} from "../../common/mainUserInform/MainUserInformation";
 
 
 type ProfileInfoPropsType = {
@@ -42,8 +43,12 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
             </div>
             <ProfileStatusWithHooks status={status}/>
             <div className={s.descriptionBlock}>
-                <img className={s.photo} src={profile.photos?.large || userPhoto}
+{/*                <img className={s.photo} src={profile.photos?.large || userPhoto}
                      alt='loading..'
+                />*/}
+                <MainUserInformation photo={profile.photos?.large}
+                                     name={profile.fullName}
+                                     avatar={avatarLarge}
                 />
                 {isOwner &&
                     <>

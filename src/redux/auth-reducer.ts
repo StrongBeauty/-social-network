@@ -1,9 +1,10 @@
 import {BaseThunkType, InferActionsTypes} from "./redux-store";
 import {authAPI} from "../api/auth-api";
 import {securityAPI} from "../api/security-api";
+import {ResultCodeEnum} from "../api/api";
 
 const initialState = {
-    data: {} as DataType,
+    data: {} as AuthDataType,
     isAuth: false,
     captchaUrl: '' as string ,
 }
@@ -32,7 +33,7 @@ export const authReducer = (state: AuthPageType = initialState, action: ActionsT
 
 
 export const actions = {
-    setAuthUsersData: (data: DataType, isAuth: boolean) =>
+    setAuthUsersData: (data: AuthDataType, isAuth: boolean) =>
         ({type: 'SN/AUTH/SET_USERS_DATA', data, isAuth} as const),
 
     getCaptchaUrl: (url: string) =>
@@ -44,7 +45,7 @@ export const getAuthUserData = (): ThunkType =>
     async (dispatch) => {
         const response = await authAPI.me()
         if (response.resultCode === 0) {
-            dispatch(actions.setAuthUsersData(response.data as DataType, true))
+            dispatch(actions.setAuthUsersData(response.data as AuthDataType, true))
         }
     }
 
@@ -57,9 +58,9 @@ export const getCaptchaUrl = (): ThunkType =>
 export const loginThunk = (email: string, password: string, rememberMe: boolean, captcha?: string): ThunkType =>
     async (dispatch) => {
         const response = await authAPI.login(email, password, rememberMe, captcha)
-        if (response.resultCode === 0) {
+        if (response.resultCode === ResultCodeEnum.Success) {
             dispatch(getAuthUserData())
-        } else if (response.resultCode === 10) {
+        } else if (response.resultCode === ResultCodeEnum.Captcha) {
             dispatch(getCaptchaUrl())
         }
     }
@@ -67,7 +68,7 @@ export const loginThunk = (email: string, password: string, rememberMe: boolean,
 export const logoutThunk = (): ThunkType =>
     async (dispatch) => {
         const response = await authAPI.logout()
-        if (response.resultCode === 0) {
+        if (response.resultCode === ResultCodeEnum.Success) {
             dispatch(actions.setAuthUsersData({id: '', login: '', email: ''}, false))
         }
     }
@@ -77,12 +78,6 @@ export type AuthPageType = typeof initialState
 type ActionsType = InferActionsTypes<typeof actions>
 
 type ThunkType = BaseThunkType<ActionsType, void>
-
-export type AuthType = {
-    resultCode: number
-    messages: []
-    data: DataType
-}
 
 export type AuthDataType = {
     id: number | ''

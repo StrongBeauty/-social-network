@@ -2,14 +2,12 @@ import {chatAPI, ChatMessageType} from "../api/chat-api";
 import {BaseThunkType, InferActionsTypes} from "./redux-store";
 import {Dispatch} from "redux";
 
-
 const initialState = {
     messages: [] as ChatMessageType[]
 }
 
 export const chatReducer = (state: ChatPageType = initialState, action: ActionsType): ChatPageType => {
     switch (action.type) {
-
         case 'SN/CHAT/MESSAGES_RECEIVED':
 
             return {
@@ -40,7 +38,6 @@ const newMessageHandlerCreator = (dispatch: Dispatch) => {
     return _newMessageHandler
 }
 
-
 export const startMessagesListening = (): ThunkType =>
     async (dispatch) => {
         await chatAPI.start()
@@ -58,7 +55,6 @@ export const sendMessage = (message: string): ThunkType =>
         await chatAPI.sendMessage(message)
         dispatch(startMessagesListening)
     }
-
 
 export type ChatPageType = typeof initialState
 

@@ -27,7 +27,6 @@ export const actions = {
 
 export const initializeApp = (): ThunkType =>
     async (dispatch) => {
-    console.log('+')
         const promise = dispatch(getAuthUserData())
         await Promise.all([promise])
         dispatch(actions.initializedSuccess())

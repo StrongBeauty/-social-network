@@ -11,12 +11,14 @@ export const  usersAPI = {
         const response = await instance.get<GetItemsType<UserType>>(`/users`)
                 return response.data
     },
-    follow(userId: number) {
-        return instance.post<OperationObjectType>(`/follow/${userId}`)
+    async follow(userId: number) {
+        const response = await instance.post<OperationObjectType>(`/follow/${userId}`)
+        return  response.data
 
     },
-    unfollow(userTd: number) {
-        return instance.delete<OperationObjectType>(`/follow/${userTd}`)
+    async unfollow(userTd: number) {
+        const response = await instance.delete<OperationObjectType>(`/follow/${userTd}`)
+        return response.data
     },
 }
 

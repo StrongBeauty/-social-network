@@ -28,7 +28,7 @@ export const Users: React.FC = () => {
     const isAuth = useSelector(selectIsAuth)
     //const filter = useSelector(selectUsersFilter)
     const dispatch = useDispatch()
-    const [searchParams, setsearchParams] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
         const page = searchParams.get('page')
@@ -42,7 +42,7 @@ export const Users: React.FC = () => {
     useEffect(() => {
         const query = {} as QueryParamsType
         if (currentPage !== 1) query.page = String(currentPage)
-        setsearchParams(query)
+        setSearchParams(query)
         //?page=${currentPage}` //`?term=${filter.term}${filter.friend}&page=${currentPage}`
     }, [currentPage])
 
@@ -69,9 +69,8 @@ export const Users: React.FC = () => {
     return <div>
         <Paginator currentPage={currentPage}
                    totalItemsCount={totalUsersCount}
-                   pageSize={pageSize}
                    onPageChanged={onPageChanged}
-                   portionSize={10}
+                   pageSize={pageSize}
         />
         {users.map(u => <User key={u.id}
                               user={u}

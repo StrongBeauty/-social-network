@@ -1,12 +1,12 @@
 import {Action, applyMiddleware, combineReducers, compose, createStore} from "redux";
 import {profileReducer} from "./profile-reducer";
 import {dialogsReducer} from "./dialogs-reducer";
-import {sidebarReducer} from "./sidebar-reducer";
 import {usersReducer} from "./users-reducer";
 import { authReducer} from "./auth-reducer";
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import {appReducer} from "./app-reducer";
 import {chatReducer} from "./chat-reducer";
+import {newsReducer} from "./news-reduser";
 
 declare global {
     interface Window {
@@ -18,11 +18,11 @@ declare global {
 const reducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
-    sidebar: sidebarReducer,
     usersPage: usersReducer,
     auth: authReducer,
     app: appReducer,
     chat: chatReducer,
+    newsPage: newsReducer,
 })
 
 const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

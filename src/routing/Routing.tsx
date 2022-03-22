@@ -3,7 +3,7 @@ import {useSelector} from "react-redux"
 import {Navigate, Route, Routes} from "react-router-dom"
 import {LoginPage} from "../components/Login/LoginPage"
 import {Music} from "../components/Music/Music"
-import {News} from "../components/News/News"
+import {NewsPage} from "../components/News/NewsPage"
 import {Settings} from "../components/Settings/Settings"
 import {UserPage} from "../components/Users/UsersPage"
 import {withSuspense} from "../hoc/withSuspense"
@@ -17,7 +17,7 @@ const ProfilePage = React.lazy(() => import("../components/Profile/ProfilePage")
 const SuspendProfile = withSuspense(ProfilePage)
 const RequiredAuthDialogs = withRequireAuth(withSuspense(DialogsContainer))
 const RequiredAuthChat = withRequireAuth(withSuspense(ChatPage))
-const RequiredAuthNews = withRequireAuth(News)
+const RequiredAuthNews = withRequireAuth(NewsPage)
 const RequiredAuthMusic = withRequireAuth(Music)
 const RequiredAuthSettings = withRequireAuth(Settings)
 

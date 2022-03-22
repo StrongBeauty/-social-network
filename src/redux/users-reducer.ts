@@ -3,6 +3,7 @@ import {BaseThunkType, InferActionsTypes} from "./redux-store";
 import {usersAPI} from "../api/users-api";
 import {updateObjectInArray} from "../utils/object-helpers";
 import { PhotosType } from "./profile-reducer";
+import {ResultCodeEnum} from "../api/api";
 
 const initialState = {
     users: [] as UserType[],
@@ -97,10 +98,10 @@ export const requestUsers = (page: number, pageSize: number): ThunkType => {
     }
 }
 
-const followUnfollowFlow = async (userId: number, dispatch: DispatchType, AC: ACType, apiMethod: ApiMethodType) => {
+const followUnfollowFlow = async (userId: number, dispatch: DispatchType, AC: FollowUnfollowACType, apiMethod: ApiMethodType) => {
     dispatch(actions.toggleFollowingProgress(true, userId))
     const response = await apiMethod(userId)
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === ResultCodeEnum.Success) {
         dispatch(AC(userId))
     }
     dispatch(actions.toggleFollowingProgress(false, userId))
@@ -129,22 +130,14 @@ export type UserType = {
     location: LocationType
 }
 
-/*export type PhotosType = {
-    small: string | null,
-    large: string | null
-}*/
-
 export type LocationType = {
     city: string
     country: string
 }
 
-type ActionsType = InferActionsTypes<typeof actions>
-
-type ACType = typeof actions.followSuccess | typeof actions.unfollowSuccess
-
+type FollowUnfollowACType = typeof actions.followSuccess | typeof actions.unfollowSuccess
 type ApiMethodType = typeof usersAPI.follow | typeof usersAPI.unfollow
 
+type ActionsType = InferActionsTypes<typeof actions>
 type DispatchType = Dispatch<ActionsType>
-
 type ThunkType = BaseThunkType<ActionsType, void>

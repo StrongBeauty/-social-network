@@ -4,6 +4,7 @@
 }
 
 .dialogItems{
+    display: inline;
     padding: 10px;
     color: white;
 }
@@ -15,12 +16,4 @@
 
 .dialog a {
     text-decoration: none;
-}
-
-.messages{
-    padding: 10px;
-}
-
-.messages .message {
-    color: white;
 }

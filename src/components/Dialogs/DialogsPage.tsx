@@ -1,45 +1,51 @@
-import React, {FC} from 'react'
+import React, {FC, useEffect} from 'react'
 import s from "./Dialogs.module.css"
-import {Message} from "./Message/Message";
 import {DialogItem} from "./DialogItem/DialogItem";
-//
 import {SubmitHandler, useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
-import {selectDialogs, selectMessages} from "../../redux/dialogs-selector";
-import {selectIsAuth} from "../../redux/auth-selector";
-import {actions} from "../../redux/dialogs-reducer";
-import { dialogsAPI } from '../../api/dialogs-api';
+import {selectDialogs, selectIsFetching} from "../../redux/dialogs-selector";
+import {actions, requestDialogs} from "../../redux/dialogs-reducer";
+import {Preloader} from "../common/preloader/preloader";
+import {useNavigate} from "react-router-dom";
 
 const DialogsPage: React.FC = () => {
-    const messages = useSelector(selectMessages)
+    //const messages = useSelector(selectMessages)
     const dialogs = useSelector(selectDialogs)
-    const isAuth = useSelector(selectIsAuth)
+    const isFetching = useSelector(selectIsFetching)
+
     const dispatch = useDispatch()
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        dispatch(requestDialogs())
+    }, [])
 
     let dialogsElements = dialogs
-        .map(d => <DialogItem name={d.name} key={d.id + Math.random()} id={d.id}/>)
-
-    let messagesElements = messages
-        .map(m => <Message message={m.message} />)
-
-/*    if (!isAuth) {
-        return <Redirect to={'/login'}/>
-    }*/
+        .map(d => <DialogItem key={d.id}
+                              id={d.id}
+                              small={d.photos.small}
+                              userName={d.userName}
+                              lastUserActivityDate={d.lastUserActivityDate}
+                              newMessagesCount={d.newMessagesCount}
+                              onClick={() => {navigate(`/dialogs/${d.id}`)
+                              }}
+        />)
 
     const sendMessage = (newMessage: string) => {
         dispatch(actions.sendMessageActionCreator(newMessage))
+        //dispatch(dialogsAPI.startDialog(21599))
+
     }
 
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItems}>
-                {dialogsElements}
+        <>
+            {isFetching ? <Preloader/> : null}
+            <div className={s.dialogs}>
+                <div className={s.dialogsItems}>
+                    {dialogsElements}
+                </div>
             </div>
-            <div className={s.messages}>
-                <div>{messagesElements}</div>
-                <TXT sendM={sendMessage} />
-            </div>
-        </div>
+        </>
     )
 }
 

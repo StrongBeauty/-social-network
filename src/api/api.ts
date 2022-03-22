@@ -11,7 +11,7 @@ export const instance = axios.create({
 })
 
 export enum ResultCodeEnum {
-    Succes = 0,
+    Success = 0,
     Captcha = 10,
     Error = 1 ,
 }
@@ -22,7 +22,7 @@ export type OperationObjectType<D = {}, RC = ResultCodeEnum> = {
     resultCode: RC
 }
 
-export type GetItemsType<T> = {
+export type GetItemsType<T = []> = {
     items: T[]
     totalCount: number
     error: string

@@ -1,6 +1,7 @@
 import {Dispatch} from "redux";
 import {InferActionsTypes} from "./redux-store";
 import {profileAPI} from "../api/profile-api";
+import {ResultCodeEnum} from "../api/api";
 
 
 const initialState = {
@@ -90,7 +91,7 @@ export const updateStatus = (status: string) =>
         try {
             const data = await profileAPI.updateStatus(status)
 
-            if (data.resultCode === 0) {
+            if (data.resultCode === ResultCodeEnum.Success) {
                 dispatch(actions.setStatus(status))
             }
         } catch (error) {
@@ -101,14 +102,13 @@ export const savePhoto = (photoFile: File) =>
     async (dispatch: Dispatch) => {
         const data = await profileAPI.savePhoto(photoFile)
 
-        if (data.resultCode === 0) {
+        if (data.resultCode === ResultCodeEnum.Success) {
             dispatch(actions.savePhoto(data.data.photos))
         }
     }
 
 
 type ActionsType = InferActionsTypes<typeof actions>
-
 export type ProfilePageType = typeof initialState
 
 export type PostType = {

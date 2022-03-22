@@ -1,15 +1,10 @@
 import { PhotosType } from "./profile-reducer";
-import {InferActionsTypes} from "./redux-store";
+import {BaseThunkType, InferActionsTypes} from "./redux-store";
+import {dialogsAPI} from "../api/dialogs-api";
 
 const initialState = {
-    dialogs: [
-        {id: 1, name: 'A'},
-        {id: 2, name: 'B'},
-        {id: 3, name: 'C'},
-        {id: 4, name: 'D'},
-        {id: 5, name: 'E'},
-        {id: 6, name: 'F'}
-    ] as Array<DialogType>,
+    dialogs: [] as Array<DialogType>,
+    isFetching: false,
     messages: [
         {id: 1, message: 'Hi'},
         {id: 2, message: 'Hey'},
@@ -24,12 +19,23 @@ export const dialogsReducer = (state = initialState, action: ActionsType): Dialo
 
     switch (action.type) {
         case 'SN/DIALOGS/SEND-MESSAGE': {
-            let body = action.newMessageBody
             return {
                 ...state,
-                messages: [...state.messages, {id: 6, message: body}]
+                messages: [...state.messages, {id: 6, message: action.newMessageBody}]
             }
         }
+        case 'SN/DIALOGS/SET-DIALOGS': {
+            return {
+                ...state,
+                //@ts-ignore
+                dialogs: action.dialogs
+            }
+        }
+        case 'SN/DIALOGS/TOGGLE_IS_FETCHING':
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
         default:
             return state
     }
@@ -37,15 +43,39 @@ export const dialogsReducer = (state = initialState, action: ActionsType): Dialo
 
 export const actions = {
     sendMessageActionCreator: (newMessageBody: string) =>
-        ({type: 'SN/DIALOGS/SEND-MESSAGE', newMessageBody} as const)
+        ({type: 'SN/DIALOGS/SEND-MESSAGE', newMessageBody} as const),
+    setDialogs: (dialogs: DialogType[]) =>
+        ({type: 'SN/DIALOGS/SET-DIALOGS', dialogs} as const),
+    setCurrentPage: (currentPage: number) => ({type: 'SN/DIALOGS/SET_CURRENT_PAGE', currentPage} as const),
+    toggleIsFetching: (isFetching: boolean) => ({type: 'SN/DIALOGS/TOGGLE_IS_FETCHING', isFetching} as const),
+/*    startDialog: (dialogs: any) =>
+        ({type: 'SN/DIALOGS/START-DIALOG'} as const)*/
 }
+
+export const requestDialogs = (): ThunkType => {
+    return async (dispatch) => {
+         dispatch(actions.toggleIsFetching(true))
+        const data = await dialogsAPI.getDialogs()
+        dispatch(actions.toggleIsFetching(false))
+        dispatch(actions.setDialogs(data))
+    }
+}
+
+
+export const startDialog =  async (userId: number) => {
+         await dialogsAPI.startDialog(userId)
+    }
+
+export const sendMessage =  async (userId: number, message: string) =>{
+      await  dialogsAPI.sendMessage(userId, message)
+    }
 
 export type DialogsPageType = typeof initialState
 type ActionsType = InferActionsTypes<typeof actions>
+type ThunkType = BaseThunkType<ActionsType, void>
 
 export type DialogType = {
     id: number
-    name: string
     userName: string,
     hasNewMessages: boolean,
     lastDialogActivityDate: string,

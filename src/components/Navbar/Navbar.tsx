@@ -19,7 +19,7 @@ export const Navbar = () => {
     return(
         <nav className={s.nav}>
             <div className={s.item}>
-            <NavLink to={userId ? `profile/${userId}` : 'login'}
+            <NavLink to={{userId} && `profile/${userId}`}
                 className={setActive}>Profile</NavLink>
             </div>
             <div className={s.item}>
@@ -43,5 +43,3 @@ export const Navbar = () => {
         </nav>
     )
 }
-
-//export default Navbar;
