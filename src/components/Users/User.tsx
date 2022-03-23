@@ -2,9 +2,8 @@ import React from "react";
 import {UserType} from "../../redux/users-reducer";
 import {MainUserInformation} from "../common/mainUserInform/MainUserInformation";
 import avatarSmall from "../../assets/images/avatarSmall.png";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import styles from "./User.module.css";
-
 
 type UserPropsType = {
     user: UserType
@@ -38,24 +37,24 @@ export const User: React.FC<UserPropsType> = ({
                     <div>
                         {user.followed
                             ? <button
-                                disabled={followingInProgress.some(id => id === user.id)}
-                                onClick={() => {
-                                    unfollow(user.id)
-                                }}>Unfollow</button>
-
+                                disabled={followingInProgress
+                                    .some(id => id === user.id)}
+                                onClick={() => unfollow(user.id)
+                                }>
+                                Unfollow
+                            </button>
                             : <button
                                 disabled={followingInProgress
                                     .some(id => id === user.id)}
-                                onClick={() => {
-                                    follow(user.id)
-                                }}>
-                                Follow</button>
+                                onClick={() => follow(user.id)
+                                }>
+                                Follow
+                            </button>
                         }
                     </div>
                     <div>
                         <button
-                            onClick={() => {
-                            }}
+                            onClick={() => {}}
                         >
                             Message
                         </button>

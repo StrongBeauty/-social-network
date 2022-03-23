@@ -12,7 +12,9 @@ export const Post: React.FC<PostPropsType> = ({
                                               }: PostPropsType) => {
     return (
         <div className={s.item}>
-            <img src='https://mobila.guru/wp-content/uploads/2018/10/5-13.jpg' alt='loading..'/>
+            <img src='https://mobila.guru/wp-content/uploads/2018/10/5-13.jpg'
+                 alt='loading..'
+            />
             {message}
             <div>
                 <span>Like-</span>

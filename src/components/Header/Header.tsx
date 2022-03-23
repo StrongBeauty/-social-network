@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import s from "./Header.module.css"
-import {Link, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuth, selectLogin} from "../../redux/auth-selector";
 import {logoutThunk} from "../../redux/auth-reducer";
@@ -33,7 +33,9 @@ export const Header: React.FC = () => {
                     ? <div>{login}
                         <button onClick={onLogout}>Log out</button>
                     </div>
-                    : <NavLink to={'login'}>Login</NavLink>
+                    : <NavLink to={'login'}>
+                        Login
+                    </NavLink>
                 }
             </div>
         </header>

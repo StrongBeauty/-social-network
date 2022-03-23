@@ -84,9 +84,7 @@ export const actions = {
     } as const),
 }
 
-
 export const requestUsers = (page: number, pageSize: number): ThunkType => {
-
     return (dispatch: DispatchType) => {
         dispatch(actions.toggleIsFetching(true))
         dispatch(actions.setCurrentPage(page))
@@ -95,6 +93,7 @@ export const requestUsers = (page: number, pageSize: number): ThunkType => {
             dispatch(actions.setUsers(data.items))
             dispatch(actions.setTotalUsersCount(data.totalCount))
         })
+
     }
 }
 

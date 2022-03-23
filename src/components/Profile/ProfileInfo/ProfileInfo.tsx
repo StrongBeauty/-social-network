@@ -43,9 +43,6 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
             </div>
             <ProfileStatusWithHooks status={status}/>
             <div className={s.descriptionBlock}>
-{/*                <img className={s.photo} src={profile.photos?.large || userPhoto}
-                     alt='loading..'
-                />*/}
                 <MainUserInformation photo={profile.photos?.large}
                                      name={profile.fullName}
                                      avatar={avatarLarge}
@@ -58,18 +55,26 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({
                                id='img'
                                onChange={onMainPhotoSelected}
                         />
-                        <span><label className={s.btn__custom} htmlFor='img'>Select photo</label></span>
+                        <span>
+                            <label className={s.btn__custom}
+                                   htmlFor='img'
+                            >
+                                Select photo
+                            </label>
+                        </span>
                     </>
                 }
 
-                {editMode ? <ProfileDataForm/> : <ProfileData lookingForAJob={profile.lookingForAJob}
-                                                              lookingForAJobDescription={profile.lookingForAJobDescription}
-                                                              fullName={profile.fullName}
-                                                              contacts={profile.contacts}
-                                                              aboutMe={profile.aboutMe}
-                                                              isOwner={isOwner}
-                                                              goToEditMode={() => setEditMode(true)}
-                />}
+                {editMode
+                    ? <ProfileDataForm/>
+                    : <ProfileData lookingForAJob={profile.lookingForAJob}
+                                   lookingForAJobDescription={profile.lookingForAJobDescription}
+                                   fullName={profile.fullName}
+                                   contacts={profile.contacts}
+                                   aboutMe={profile.aboutMe}
+                                   isOwner={isOwner}
+                                   goToEditMode={() => setEditMode(true)}
+                    />}
             </div>
             <h1>{profile.aboutMe}</h1>
         </div>

@@ -1,3 +1,4 @@
+import React from 'react';
 import {ContactsType} from "../../../../redux/profile-reducer"
 
 type ContactPropsType = {

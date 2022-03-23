@@ -1,18 +1,18 @@
 import React from "react"
 import {useSelector} from "react-redux"
 import {Navigate, Route, Routes} from "react-router-dom"
-import {LoginPage} from "../components/Login/LoginPage"
 import {Music} from "../components/Music/Music"
-import {NewsPage} from "../components/News/NewsPage"
+import {NewsPage} from "../pages/news/NewsPage"
 import {Settings} from "../components/Settings/Settings"
-import {UserPage} from "../components/Users/UsersPage"
+import {UsersPage} from "../components/Users/UsersPage"
 import {withSuspense} from "../hoc/withSuspense"
-import {selectAuthorizedUserId, selectIsAuth} from "../redux/auth-selector"
+import {selectAuthorizedUserId} from "../redux/auth-selector"
 import {Layout} from "./Layout"
 import {withRequireAuth} from '.././hoc/WithRequireAuth'
+import { LoginPage } from "../pages/login/LoginPage"
 const ChatPage = React.lazy(() => import(".././pages/chat/ChatPage"))
-const DialogsContainer = React.lazy(() => import("../components/Dialogs/DialogsPage"))
-const ProfilePage = React.lazy(() => import("../components/Profile/ProfilePage"))
+const DialogsContainer = React.lazy(() => import("../pages/dialogs/DialogsPage"))
+const ProfilePage = React.lazy(() => import("../pages/profile/ProfilePage"))
 
 const SuspendProfile = withSuspense(ProfilePage)
 const RequiredAuthDialogs = withRequireAuth(withSuspense(DialogsContainer))
@@ -35,7 +35,7 @@ export const Routing = () => {
                             <ProfilePage/>
                         </React.Suspense>*/
                 />
-                <Route path='users/*' element={<UserPage pageTitle='SN'/>} />
+                <Route path='users/*' element={<UsersPage pageTitle='SN'/>} />
                 <Route path='chat' element={<RequiredAuthChat />} />
                 <Route path='news' element={<RequiredAuthNews />} />
                 <Route path='music' element={<RequiredAuthMusic />} />

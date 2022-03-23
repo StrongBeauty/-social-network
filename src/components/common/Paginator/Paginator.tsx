@@ -10,7 +10,7 @@ type PaginatorPropsType = {
     pageSize?: number
 }
 
-export const Paginator: React.FC<PaginatorPropsType> = ({
+export const Paginator: React.FC<PaginatorPropsType> = React.memo( ({
                                                             totalItemsCount,
                                                             currentPage,
                                                             onPageChanged,
@@ -34,11 +34,15 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
     let leftPortionPageNumber = (portionNumber - 1) * pageSize + 1
     let rightPortionPageNumber = portionNumber * pageSize
 
+    console.log('+')
+
     return <div className={styles.paginator}>
-        {portionNumber > 1 &&
-        <button onClick={() => {
+        {portionNumber > 1
+            && <button onClick={() => {
             setPortionNumber(portionNumber - 1)
-        }}>prev</button>
+        }}>
+            prev
+        </button>
         }
         {pages
             .filter(p => p >= leftPortionPageNumber && p <= rightPortionPageNumber)
@@ -57,4 +61,4 @@ export const Paginator: React.FC<PaginatorPropsType> = ({
         }}>next</button>
         }
     </div>
-}
+})

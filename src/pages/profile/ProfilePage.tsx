@@ -3,17 +3,17 @@ import {useDispatch, useSelector} from "react-redux";
 import {getStatus, getUserProfile} from "../../redux/profile-reducer";
 import {useParams} from 'react-router';
 import {selectAuthorizedUserId} from "../../redux/auth-selector";
-import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
+import {ProfileInfo} from "../../components/Profile/ProfileInfo/ProfileInfo";
 import { useNavigate } from "react-router-dom";
-import { MyPosts } from "./MyPosts/MyPosts";
+import { MyPosts } from "../../components/Profile/MyPosts/MyPosts";
 
 type ParamsType = {
     userId: string
 }
 
 const ProfilePage = () => {
-
     const authorizedUserId = useSelector(selectAuthorizedUserId)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const params = useParams() as ParamsType
@@ -24,7 +24,7 @@ const ProfilePage = () => {
         if (userId === 'undefined' && !authorizedUserId) {
             navigate('/login', {replace: true})
         } else {
-            if(userId === 'undefined' && authorizedUserId){
+            if (userId === 'undefined' && authorizedUserId){
                 userId = String(authorizedUserId)
             }
             dispatch(getUserProfile(+userId))
@@ -34,7 +34,7 @@ const ProfilePage = () => {
 
     return (
         <div>
-            <ProfileInfo isOwner={+userId === authorizedUserId}/>
+            <ProfileInfo isOwner={+userId === authorizedUserId} />
             <MyPosts />
         </div>
     )
