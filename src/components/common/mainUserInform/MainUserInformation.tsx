@@ -1,4 +1,4 @@
-import styles from "../../Users/User.module.css";
+import styles from "../../../pages/users/User.module.css";
 import React from "react";
 
 type MainUserInformationType = {

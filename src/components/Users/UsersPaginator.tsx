@@ -17,9 +17,6 @@ export const UserPaginator = React.memo(() => {
     const dispatch = useDispatch()
     const [searchParams, setSearchParams] = useSearchParams({})
 
-
-
-
     useEffect(() => {
         const page = searchParams.get('page')
         let actualPage = 1

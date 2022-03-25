@@ -3,7 +3,7 @@ import {UserType} from "../../redux/users-reducer";
 import {MainUserInformation} from "../common/mainUserInform/MainUserInformation";
 import avatarSmall from "../../assets/images/avatarSmall.png";
 import {Link} from "react-router-dom";
-import styles from "./User.module.css";
+import styles from "../../pages/users/User.module.css";
 
 type UserPropsType = {
     user: UserType

@@ -6,7 +6,7 @@ import { authReducer} from "./auth-reducer";
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import {appReducer} from "./app-reducer";
 import {chatReducer} from "./chat-reducer";
-import {newsReducer} from "./news-reduser";
+import {newsReducer} from "./news-reducer";
 
 declare global {
     interface Window {

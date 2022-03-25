@@ -27,7 +27,6 @@ export const dialogsReducer = (state = initialState, action: ActionsType): Dialo
         case 'SN/DIALOGS/SET-DIALOGS': {
             return {
                 ...state,
-                //@ts-ignore
                 dialogs: action.dialogs
             }
         }

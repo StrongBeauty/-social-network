@@ -1,5 +1,5 @@
 import React from "react";
-import {actions, followThunk, unfollowThunk} from "../../redux/users-reducer";
+import {followThunk, unfollowThunk} from "../../redux/users-reducer";
 import {User} from "./User";
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -7,7 +7,6 @@ import {
     selectFollowingInProgress,
 } from "../../redux/users-selector";
 import {selectIsAuth} from "../../redux/auth-selector";
-import {usersAPI} from "../../api/users-api";
 
 export const Users: React.FC = React.memo(() => {
 

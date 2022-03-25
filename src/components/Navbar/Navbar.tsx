@@ -2,7 +2,7 @@ import React from "react"
 import s from "./Navbar.module.css"
 import {selectAuthorizedUserId} from "../../redux/auth-selector";
 import {useSelector} from "react-redux";
-import {CustomLink} from "../../utils/CustomLink";
+import {CustomLink} from "../../features/CustomLink";
 
 /*type stylePropsType = {
     isActive: boolean

@@ -6,29 +6,24 @@ import avatarSmall from "../../../assets/images/avatarSmall.png";
 import {MainUserInformation} from "../../common/mainUserInform/MainUserInformation";
 
 type DialogItemPropsType =
-    Omit<DialogType, 'hasNewMessages' | 'lastDialogActivityDate' | 'photos'>
-    & { photo: string | null, onClick: () => void }
+    Pick<DialogType, 'id' | 'userName' | 'newMessagesCount'>
+    & {
+    photo: string | null,
+    date: string
+    time: string
+    onClick: () => void
+}
 
 export const DialogItem: React.FC<DialogItemPropsType> = ({
                                                               id,
                                                               photo,
                                                               userName,
-                                                              lastUserActivityDate,
+                                                              date,
+                                                              time,
                                                               newMessagesCount,
                                                               onClick
                                                           }: DialogItemPropsType) => {
 
-    const allDate = new Date(lastUserActivityDate)
-    const time = allDate.toLocaleString('en-Gb', {
-        hour: '2-digit',
-        minute: '2-digit',
-    })
-    const date = allDate.toLocaleString('en-Gb', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-    })
-        .replace(/\//g, '.')
 
     return (
         <span className={s.dialog + " " + s.active}>

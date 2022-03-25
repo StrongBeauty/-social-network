@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ArticleType, ParamsType} from "../redux/news-reduser";
+import {ArticleType, ParamsType} from "../redux/news-reducer";
 
 /*const options = {
     method: 'GET',
@@ -20,26 +20,27 @@ export const getNews = () => axios.request(options).then(function (response) {
 });*/
 
 const instance = axios.create({
-    baseURL: `https://google-news.p.rapidapi.com/v1/`,
+    baseURL: `https://bing-news-search1.p.rapidapi.com/news`,
     headers: {
-        'x-rapidapi-host': 'google-news.p.rapidapi.com',
-        'x-rapidapi-key': '2175bd37c3mshc9db93a14129e53p1724b5jsnfc544ef0ab56'
+        'X-BingApis-SDK': 'true',
+        'X-RapidAPI-Host': 'bing-news-search1.p.rapidapi.com',
+        'X-RapidAPI-Key': 'd2d6011bc5msh24db02195646d06p18d5b9jsnddeed7d2ae22',
+        'Accept-Language': 'en-US'
     }
 })
 
-/*
-const options = {
-
-    }
-*/
-
-
 export const newsAPI = {
-    async getNews( params: ParamsType) {
-        const response = await instance.get<ArticleType[]>(`top_headlines`, {params})
-        console.log(response.data)
-        return response.data
+    async getNews( params?: ParamsType) {
+        const response = await instance.get<ResponseType>(``, {params})
+        console.log(response.data.value)
+        return response.data.value
     }
 }
+
+ type ResponseType = {
+    value: ArticleType[]
+}
+
+
 
 
